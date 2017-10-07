@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <script type="text/javascript">
+
+    function submitAndPost(){
+
+    }
+    </script>
+
+
+    <title>Test</title>
+  </head>
+  <body>
+
+    <table>
+    <tr><td>CRN</td><td><input type="text" name="crn" size=5 maxLength=5></td></tr>
+    <tr><td>Subject</td><td><input type="text" name="subject" size=3 maxLength=3></td></tr>
+    <tr><td>Course Number</td><td><input type="text" name="courseNum" size=3 maxLength=3></td></tr>
+    <tr><td>Section</td><td><input type="text" name="sectionL" size=1 maxLength=1></td></tr>
+    <tr><td>Credits</td><td><select name="credits" onchange="">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+    </select></td></tr>
+    <tr><td>Title</td><td><input type="text" name="courseTitle" size=50 maxLength=50></td></tr>
+    <tr><td>Class Days</td><td><input type="text" name="courseDays" size=7 maxLength=7></td></tr>
+    <tr><td>Class Time</td><td><input type="text" name="courseTime" size=35 maxLength=35></td></tr>
+    <!-- https://eonasdan.github.io/bootstrap-datetimepicker/Installing/
+         https://eonasdan.github.io/bootstrap-datetimepicker/
+    -->
+    <tr><td>Instructor</td><td><input type="text" name="instructor" size=35 maxLength=35></td></tr>
+    </td></tr>
+    </table>
+    <input type="button" value="Submit" onclick="submitAndPost();" >
+  </body>
+</html>
