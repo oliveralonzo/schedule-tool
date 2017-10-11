@@ -25,6 +25,15 @@ class Schedule {
 		}
 	}
 
+	public function removeCourse($course) {
+		if(($key = array_search($course, $this->courses)) !== false) {
+    		unset($this->courses[$key]);
+			$this->credits -= $course->getCredits();
+			return true;
+		}
+		return false;
+	}
+
 	private function courseIsContained($course) {
 		foreach ($this->courses as $current) {
 			if ($current->equals($course)) {
