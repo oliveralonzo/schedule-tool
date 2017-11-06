@@ -4,15 +4,17 @@ class Course {
     private $crn;
     private $course;
     private $instructor;
+    private $title;
     private $days;
     private $time;
     private $credits;
     private $category;
 
-    function __construct($crn, $course, $instructor, $days, $time, $credits, $category) {
+    function __construct($crn, $course, $instructor, $title, $days, $time, $credits, $category) {
         $this->crn = $crn;
         $this->course = $course;
         $this->instructor = $instructor;
+        $this->title = $title;
         $this->days = strtoupper($days);
         $this->time = $time;
         $this->credits= $credits;
@@ -35,6 +37,10 @@ class Course {
         return $this->time;
     }
 
+    public function getTitle() {
+        return $this->title;
+    }
+
     public function getInstructor() {
         return $this->instructor ;
     }
@@ -48,11 +54,11 @@ class Course {
     }
 
     public function __toString() {
-        return implode(', ', array($this->crn, $this->course, $this->instructor, $this->days, $this->time, $this->course, $this->credits, $this->category));
+        return implode(', ', array($this->crn, $this->course, $this->instructor, $this->title, $this->days, $this->time, $this->course, $this->credits, $this->category));
     }
 
     public function checkConflicts($other) {
-        return $this->checkDayConflict($other) == true and $this->checkTimeConflict($other);
+        return $this->checkDayConflict($other) == true and $this->checkTimeConflict($other) == false;
     }
 
     public function checkDayConflict($other) {
@@ -72,9 +78,7 @@ class Course {
         $time = explode("-", $this->getTime());
         $otherTime = explode("-", $other->getTime());
 
-        if (strcmp($time[0], $otherTime[0]) == 0) {
-            return true;
-        } else if (strcmp($time[0],$otherTime[0]) >= 0 and strcmp($time[0],$otherTime[1]) <= 0){
+        if (strcmp($time[0],$otherTime[0]) >= 0 and strcmp($time[0],$otherTime[1]) <= 0){
             return true;
         } else if (strcmp($otherTime[0],$time[0]) >= 0 and strcmp($otherTime[0],$time[1]) <= 0) {
             return true;
@@ -85,7 +89,7 @@ class Course {
 
     public function equals($other) {
         //include category here?
-        return $this->checkConflicts($other) or strcmp($this->getCrn(), $other->getCrn()) == 0 or strcmp($this->getCourse(), $other->getCourse()) == 0;
+        return $this->checkConflicts($other) or strcmp($this->getCrn(), $other->getCrn()) == 0 or strcmp($this->getTitle(), $other->getTitle()) == 0;
     }
 }
 

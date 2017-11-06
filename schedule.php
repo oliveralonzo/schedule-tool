@@ -47,6 +47,10 @@ class Schedule {
 		return $this->credits;
 	}
 
+	public function getMaxCredits() {
+		return $this->maxCredits;
+	}
+
 	public function __toString() {
 		return implode("\n", $this->courses);
 	}
