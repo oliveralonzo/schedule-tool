@@ -34,7 +34,7 @@ class Course {
     }
 
     public function getTime() {
-        return $this->time;
+        return trim($this->time);
     }
 
     public function getTitle() {
@@ -58,15 +58,15 @@ class Course {
     }
 
     public function checkConflicts($other) {
-        return $this->checkDayConflict($other) == true and $this->checkTimeConflict($other) == false;
+        return $this->checkDayConflict($other) == true and $this->checkTimeConflict($other) == true;
     }
 
     public function checkDayConflict($other) {
         if (strcmp($this->getDays(), "ONLINE") == 0 or strcmp($other->getDays(), "ONLINE") == 0) {
             return false;
         } else {
-            foreach (str_split($this->days) as $day) {
-                if (strpos($other->getDays(), $day) !== false) {
+            foreach (str_split($this->getDays()) as $day) {
+                if (strpos($other->getDays(), $day) != false) {
                     return true;
                 }
             }
@@ -83,8 +83,7 @@ class Course {
         } else if (strcmp($otherTime[0],$time[0]) >= 0 and strcmp($otherTime[0],$time[1]) <= 0) {
             return true;
         }
-
-        return strcmp(time[0], otherTime[0]) == 0;
+        return false;
     }
 
     public function equals($other) {

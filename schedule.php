@@ -15,18 +15,22 @@ class Schedule {
 		return $this->courses;
 	}
 
+	public function full() {
+		return $this->credits == $this->maxCredits;
+	}
+
 	public function addCourse($course) {
-		if (!$this->courseIsContained($course) and $this->getCurrentCredits() + $course->getCredits() <= $this->maxCredits) {
+		if ($this->courseIsContained($course) or $this->getCurrentCredits() + $course->getCredits() > $this->maxCredits) {
+			return false;
+		} else {
 			$this->courses[] = $course;
 			$this->credits += $course->getCredits();
 			return true;
-		} else {
-			return false;
 		}
 	}
 
 	public function removeCourse($course) {
-		if(($key = array_search($course, $this->courses)) !== false) {
+		if(($key = array_search($course, $this->courses)) != false) {
     		unset($this->courses[$key]);
 			$this->credits -= $course->getCredits();
 			return true;
