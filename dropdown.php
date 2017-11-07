@@ -1,8 +1,5 @@
 <?php
 
-Echo "<html>";
-Echo "<title>Dropdown</title>";
-
 function connectAndPullTitles() {
 $servername = "RaDLabpeoplecounter.creighton.edu";
 $username = "jen94317";
@@ -36,7 +33,11 @@ while($row = $result->fetch_assoc()) {
 /* close connection */
 $conn->close();
 
-echo '<select name="credits" onchange="">';
+$resultDrop = "";
+
+//echo '<form id="classSelector" action="index.html">';
+
+echo '<select id="titles" name="credits" onchange="">';
 foreach ($courseTitleArray as $i => $title) {
   if ($i == 0){
     continue;
@@ -44,8 +45,8 @@ foreach ($courseTitleArray as $i => $title) {
   echo '<option value="'.$title.'">'.$title.'</option>';
 }
 echo '</select>';
-
-
+echo '<input id="submitB" type="button" name="add" value="Add">';
+//echo "</form>";
 
 } //close connectAndPullTitles
 
