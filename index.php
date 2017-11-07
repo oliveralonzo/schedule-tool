@@ -8,9 +8,8 @@ function formatTime($time) {
 	return substr($time, 0, 2) . ":" . substr($time, 2, 2);
 }
 
-$file = file('options.txt');
 $coursesByTitle = [];
-foreach ($file as $line) {
+foreach ($sections as $line) {
 	list($crn, $course, $instructor, $title, $days, $time, $credits, $category) = explode(',', $line);
 	if (!array_key_exists($title, $coursesByTitle)) {
 		$coursesByTitle[$title] = [];

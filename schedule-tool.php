@@ -8,9 +8,9 @@ class Course {
     private $days;
     private $time;
     private $credits;
-    private $category;
+    //private $category;
 
-    function __construct($crn, $course, $instructor, $title, $days, $time, $credits, $category) {
+    function __construct($crn, $course, $instructor, $title, $days, $time, $credits) {
         $this->crn = $crn;
         $this->course = $course;
         $this->instructor = $instructor;
@@ -49,12 +49,12 @@ class Course {
         return $this->credits ;
     }
 
-    public function getCategory() {
-        return $this->category ;
-    }
+    // public function getCategory() {
+    //     return $this->category ;
+    // }
 
     public function __toString() {
-        return implode(', ', array($this->crn, $this->course, $this->instructor, $this->title, $this->days, $this->time, $this->course, $this->credits, $this->category));
+        return implode(', ', array($this->crn, $this->course, $this->instructor, $this->title, $this->days, $this->time, $this->course, $this->credits));
     }
 
     public function checkConflicts($other) {
@@ -209,4 +209,5 @@ class Schedules {
 		return implode("\n\n", array_values($this->getSchedules()));
 	}
 }
+
 ?>
