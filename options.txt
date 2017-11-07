@@ -1,7 +1,8 @@
-11362, JRM219, Richard Johnson, Media Writing, MW, 11:00-12:15, 1, Journalism
-12600, PHL270, David McPherson, Philosophical Ethics, MW, 12:30-13:45, 1, Ethics
-13282, ART271, Fr. Flecky, Black & White Photography, MW, 15:45-17:20, 1, Art
-13380, CSC414, Brian Kokensparger, Intro to Computer Organization, TR, 09:30-10:45, 1, Computer Science
-13196, THR131, Amy Lane, Acting I, TR, 12:30-14:15, 1, Theater
-12594, PHY110, David Kriegler, Astronomy Lab, T, 17:00-19:30, 1, Doing Nat. Sci.
-13329, THL300, Ashley Hall, MW, God and Persons, 08:00-09:15, 1, Ultimate Questions
+11362, JRM219, Richard Johnson, Media Writing, MW, 11:00-12:15, 3, Journalism
+12600, PHL270, David McPherson, Philosophical Ethics, MW, 12:30-13:45, 3, Ethics
+13282, ART271, Fr. Flecky, Black & White Photography, MW, 15:45-17:20, 3, Art
+13380, CSC414, Dr. K, Computer Organization, TR, 09:30-10:45, 3, Computer Science
+13196, THR131, Amy Lane, Acting I, TR, 12:30-14:15, 3, Theater
+13329, THL300, Ashley Hall, God and Persons, MW, 08:00-09:15, 3, Ultimate Questions
+13285, MTH205, Jean Lilly, Math for the Modern World, TR, 15:45-17:20, 3, Mathematics
+12594, PHY110, David Kriegler, Astronomy Lab, T, 17:30-19:30, 3, Doing Nat. Sci.

@@ -82,10 +82,8 @@ foreach ($file as $line) {
 // }
 
 // echo join("<br>", $courses);
-//$schedules = new Schedules($coursesByTitle, 18);
-//echo nl2br($schedules);
-//echo "<br>".count($schedules->getSchedules());
+$schedules = new Schedules($coursesByTitle, 18);
+echo nl2br($schedules);
+echo "<br>".count($schedules->getSchedules());
 
-echo formatTime("153000")."<br>";
-echo formatTime("93000")."<br>";
 ?>
