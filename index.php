@@ -9,15 +9,18 @@ function formatTime($time) {
 }
 
 $coursesByTitle = [];
+
+// Uncomment the following line for testing
+//$sections = file('options.txt');
 foreach ($sections as $line) {
-	list($crn, $course, $instructor, $title, $days, $time, $credits, $category) = explode(',', $line);
+	list($crn, $course, $instructor, $title, $days, $time, $credits) = explode(',', $line);
 	if (!array_key_exists($title, $coursesByTitle)) {
 		$coursesByTitle[$title] = [];
 	}
-	array_push($coursesByTitle[$title], new Course($crn, $course, $instructor, $title, $days, $time, $credits, $category));
+	array_push($coursesByTitle[$title], new Course($crn, $course, $instructor, $title, $days, $time, $credits));
 }
 
-$schedules = new Schedules($coursesByTitle, 18);
+$schedules = new Schedules($coursesByTitle, 5);
 echo nl2br($schedules);
 echo "<br>".count($schedules->getSchedules());
 
