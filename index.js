@@ -1,5 +1,6 @@
 $(document).ready(function(){
-  $.post("dropdown.php", function(data){
+  var getting = $.get("dropdown.php");
+  getting.done(function(data) {
     $(".dropdown-con").html(data);
 
     $("#submitB").click(function(){
@@ -13,12 +14,16 @@ $(document).ready(function(){
     });
 
     $("#generate").click(function() {
+        $(".schedules").empty();
+        $(".schedules").append("<h1>Possible Schedules</h1>");
         var titles = [];
-        console.log('hey');
         $('.title').each(function() {
             titles.push($(this).text());
         });
-        console.log(titles.join(','));
+        var posting = $.post("index-access.php", { titles: titles.join(",") });
+        posting.done(function(data){
+            $(".schedules").append(data);
+        });
     });
 
   }).fail(function(err,status){
