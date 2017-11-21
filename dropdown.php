@@ -33,7 +33,7 @@ while($row = $result->fetch_assoc()) {
 /* close connection */
 $conn->close();
 
-//asort($courseTitleArray); 
+asort($courseTitleArray); 
 $resultDrop = "";
 
 //echo '<form id="classSelector" action="index.html">';

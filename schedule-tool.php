@@ -77,7 +77,6 @@ class Course {
     private function checkTimeConflict($other) {
         $time = explode("-", $this->getTime());
         $otherTime = explode("-", $other->getTime());
-
         if (strcmp($time[0],$otherTime[0]) >= 0 and strcmp($time[0],$otherTime[1]) <= 0){
             return true;
         } else if (strcmp($otherTime[0],$time[0]) >= 0 and strcmp($otherTime[0],$time[1]) <= 0) {
@@ -113,7 +112,7 @@ class Schedule {
 	}
 
 	public function addCourse($course) {
-		if ($this->courseIsContained($course) or $this->getCurrentCredits() + $course->getCredits() > $this->maxCredits) {
+		if ($this->courseIsContained($course) !== false or $this->getCurrentCredits() + $course->getCredits() > $this->maxCredits) {
 			return false;
 		} else {
 			$this->courses[] = $course;
@@ -197,7 +196,7 @@ class Schedules {
 						array_push($this->schedules, clone $schedule);
 						$schedule->removeCourse($course);
 					}
-					$this->generateSchedulesHelper(++$currentIndex, clone $schedule);
+					$this->generateSchedulesHelper($currentIndex+1, clone $schedule);
 					$schedule->removeCourse($course);
 				}
 			}

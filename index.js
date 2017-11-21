@@ -20,7 +20,9 @@ $(document).ready(function(){
         $('.title').each(function() {
             titles.push($(this).text());
         });
-        var posting = $.post("index-access.php", { titles: titles.join(",") });
+        var credits = $("#credits").val();
+        console.log(credits);
+        var posting = $.post("index-access.php", { titles: titles.join(","), credits: credits });
         posting.done(function(data){
             $(".schedules").append(data);
         });

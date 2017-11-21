@@ -1,13 +1,6 @@
 <?php
 include 'schedule-tool.php';
 
-function formatTime($time) {
-	if (strlen($time) == 5) {
-		$time = "0".$time;
-	}
-	return substr($time, 0, 2) . ":" . substr($time, 2, 2);
-}
-
 $coursesByTitle = [];
 
 // Uncomment the following line for testing
@@ -20,7 +13,9 @@ foreach ($sections as $line) {
 	array_push($coursesByTitle[$title], new Course($crn, $course, $instructor, $title, $days, $time, $credits));
 }
 
-$schedules = new Schedules($coursesByTitle, 5);
+$numCredits = intval($_POST["credits"]);
+
+$schedules = new Schedules($coursesByTitle, $numCredits);
 echo nl2br($schedules);
 echo "<br>".count($schedules->getSchedules());
 
