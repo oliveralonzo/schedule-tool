@@ -4,7 +4,7 @@ function connectAndPullTitles() {
 $servername = "RaDLabpeoplecounter.creighton.edu";
 $username = "jen94317";
 $password = "SVOOyr80h7m3sSsT";
-$mainDatabase= "attendance";
+$mainDatabase= "for_capstone";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $mainDatabase);
 
@@ -33,6 +33,7 @@ while($row = $result->fetch_assoc()) {
 /* close connection */
 $conn->close();
 
+asort($courseTitleArray); 
 $resultDrop = "";
 
 //echo '<form id="classSelector" action="index.html">';
