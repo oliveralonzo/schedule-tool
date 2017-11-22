@@ -11,8 +11,9 @@ $(document).ready(function(){
 
   var getting = $.get("dropdown.php");
   getting.done(function(data) {
-    
+
   $(".dropdown-con").prepend(data);
+  console.log(data);
   $(".codeDropdown").hide();
 
   $("#submitByTitle").click(function(){
@@ -27,7 +28,7 @@ $(document).ready(function(){
       $title.attr('disabled','disabled');
       $('#titles').children('option:enabled').eq(0).prop('selected',true);
     });
-    
+
     $("#submitByCode").click(function(){
         if (!$(".title").length) {
           var $classes_added = $(".classes-added");
@@ -41,9 +42,9 @@ $(document).ready(function(){
         $courseNumber.attr('disabled','disabled');
         $('#titles').children('option:enabled').eq(0).prop('selected',true);
     });
-    
+
     getNumbers($("#codes option:selected").text());
-    
+
     $("#codes").change(function(){
         getNumbers($("#codes option:selected").text());
     });
@@ -87,6 +88,7 @@ function addToSelect($select, option) {
             var optionTag = '<'
         }
     });
+}
 
 function getNumbers(subject_code) {
   $("#courseNumbers").empty();
