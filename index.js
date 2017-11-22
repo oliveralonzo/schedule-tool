@@ -1,19 +1,51 @@
 $(document).ready(function(){
+
+  $("#titleButton").click(function(){
+    $(".titleDropdown").show();
+    $(".codeDropdown").hide();
+  });
+  $("#codeButton").click(function(){
+    $(".codeDropdown").show();
+    $(".titleDropdown").hide();
+  });
+
   var getting = $.get("dropdown.php");
   getting.done(function(data) {
-    $(".dropdown-con").html(data);
+    
+  $(".dropdown-con").prepend(data);
+  $(".codeDropdown").hide();
 
-    $("#submitB").click(function(){
+  $("#submitByTitle").click(function(){
       if (!$(".title").length) {
         $(".classes-added").prepend("<h1> Classes Selected </h1>");
       }
       var $title = $("#titles option:selected");
       $(".classes-added-list").append(
           '<li class="title"> <span class="courseTitle">'+
-          $title.text()+
+          $title.val()+
           '</span> <span class="removeCourse">Remove</span> </li>');
       $title.attr('disabled','disabled');
       $('#titles').children('option:enabled').eq(0).prop('selected',true);
+    });
+    
+    $("#submitByCode").click(function(){
+        if (!$(".title").length) {
+          var $classes_added = $(".classes-added");
+          $classes_added.prepend("<h1> Classes Selected </h1>");
+        }
+        var $courseNumber = $("#courseNumbers option:selected");
+        $(".classes-added-list").append(
+            '<li class="title"> <span class="courseTitle">'+
+            $courseNumber.val()+
+            '</span> <span class="removeCourse">Remove</span> </li>');
+        $courseNumber.attr('disabled','disabled');
+        $('#titles').children('option:enabled').eq(0).prop('selected',true);
+    });
+    
+    getNumbers($("#codes option:selected").text());
+    
+    $("#codes").change(function(){
+        getNumbers($("#codes option:selected").text());
     });
 
     $(".classes-added-list").on("click", ".removeCourse", function() {
@@ -55,4 +87,15 @@ function addToSelect($select, option) {
             var optionTag = '<'
         }
     });
+
+function getNumbers(subject_code) {
+  $("#courseNumbers").empty();
+  var getNums = $.post("courseNumbers.php",{
+    subject_code: subject_code
+  })
+  getNums.done(function(data){
+    console.log(subject_code);
+    $("#courseNumbers").append(data);
+  })
+
 }
