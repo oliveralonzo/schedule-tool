@@ -166,7 +166,7 @@ class Schedules {
 	private $maxCredits;
 
 	function __construct($coursesByTitle, $maxCredits) {
-		$this->amount = $amount;
+		$this->amount = 0;
 		$this->coursesByTitle = $coursesByTitle;
 		$this->courseTitles = array_keys($coursesByTitle);
 		$this->maxCredits = $maxCredits;
