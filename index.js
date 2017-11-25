@@ -49,12 +49,14 @@ function getNumbers(subject_code) {
     subject_code: subject_code
   })
   getNums.done(function(data){
-    $("#courseNumbers").append(data);
-    $("#courseNumbers option").each(function() {
+    var $courseNumbers = $("#courseNumbers");
+    $courseNumbers.append(data);
+    $courseNumbers.find("option").each(function() {
         if ($(".classes-added-list").text().indexOf($(this).val())>-1) {
             $(this).attr('disabled','disabled');
         };
     });
+    $courseNumbers.children('option:enabled').eq(0).prop('selected',true);
   })
 
 }
@@ -97,7 +99,7 @@ function enableDropDowns(courseTitle) {
 
 function enableDropDown($dropdown, courseTitle) {
     $dropdown.find("option[value='"+courseTitle+"']").attr("disabled", false);
-    $dropdown.children('option:enabled').eq(0).prop('selected',true);
+    $dropdown.children('option:enabled').eq(0).attr('selected',true);
 }
 
 function generateSchedules() {
