@@ -8,9 +8,9 @@ class Course {
     private $days;
     private $time;
     private $credits;
-    //private $category;
+    private $category;
 
-    function __construct($crn, $course, $instructor, $title, $days, $time, $credits) {
+    function __construct($crn, $course, $instructor, $title, $days, $time, $credits, $category) {
         $this->crn = $crn;
         $this->course = $course;
         $this->instructor = $instructor;
@@ -18,7 +18,7 @@ class Course {
         $this->days = strtoupper($days);
         $this->time = $time;
         $this->credits= $credits;
-        //$this->category = $category;
+        $this->category = $category;
     }
 
    public function getCrn() {
@@ -49,12 +49,12 @@ class Course {
         return $this->credits ;
     }
 
-    // public function getCategory() {
-    //     return $this->category ;
-    // }
+    public function getCategory() {
+        return $this->category ;
+    }
 
     public function __toString() {
-        return implode(', ', array($this->crn, $this->course, $this->instructor, $this->title, $this->days, $this->time, $this->credits));
+        return implode(', ', array($this->crn, $this->course, $this->instructor, $this->title, $this->days, $this->time, $this->course, $this->credits, $this->category));
     }
 
     public function checkConflicts($other) {
@@ -77,6 +77,7 @@ class Course {
     private function checkTimeConflict($other) {
         $time = explode("-", $this->getTime());
         $otherTime = explode("-", $other->getTime());
+
         if (strcmp($time[0],$otherTime[0]) >= 0 and strcmp($time[0],$otherTime[1]) <= 0){
             return true;
         } else if (strcmp($otherTime[0],$time[0]) >= 0 and strcmp($otherTime[0],$time[1]) <= 0) {
@@ -107,12 +108,11 @@ class Schedule {
 	}
 
 	public function full() {
-        // echo "current credits". $this->credits . ", max credits:" . $this->maxCredits."<br>";
-		return $this->credits === $this->maxCredits;
+		return $this->credits == $this->maxCredits;
 	}
 
 	public function addCourse($course) {
-		if ($this->courseIsContained($course) !== false or $this->getCurrentCredits() + $course->getCredits() > $this->maxCredits) {
+		if ($this->courseIsContained($course) or $this->getCurrentCredits() + $course->getCredits() > $this->maxCredits) {
 			return false;
 		} else {
 			$this->courses[] = $course;
@@ -122,20 +122,18 @@ class Schedule {
 	}
 
 	public function removeCourse($course) {
-        $key = $this->courseIsContained($course);
-		if($key === false) {
-    		return false;
-		} else {
-            unset($this->courses[$key]);
-            $this->credits -= $course->getCredits();
+		if(($key = array_search($course, $this->courses)) != false) {
+    		unset($this->courses[$key]);
+			$this->credits -= $course->getCredits();
 			return true;
-        }
+		}
+		return false;
 	}
 
 	private function courseIsContained($course) {
-		foreach ($this->courses as $key => $current) {
+		foreach ($this->courses as $current) {
 			if ($current->equals($course)) {
-				return $key;
+				return true;
 			}
 		}
 		return false;
@@ -150,7 +148,7 @@ class Schedule {
 	}
 
 	public function __toString() {
-		return implode("\n", $this->courses)."\ncredit hours:".$this->credits."\n";
+		return implode("\n", $this->courses);
 	}
 
 	public function equals($other) {
@@ -166,7 +164,7 @@ class Schedules {
 	private $maxCredits;
 
 	function __construct($coursesByTitle, $maxCredits) {
-		$this->amount = 0;
+		$this->amount = $amount;
 		$this->coursesByTitle = $coursesByTitle;
 		$this->courseTitles = array_keys($coursesByTitle);
 		$this->maxCredits = $maxCredits;
@@ -183,20 +181,20 @@ class Schedules {
 	}
 
 	private function generateSchedulesHelper($currentIndex, $schedule) {
+		//echo "count: ". count($schedule) . "<br>";
 		$numTitles = count($this->courseTitles);
 		if ($currentIndex <= $numTitles) {
 			for ($i = $currentIndex; $i<$numTitles; $i++) {
 				$currentTitle = $this->courseTitles[$i];
 				foreach($this->coursesByTitle[$currentTitle] as $course) {
-                    //echo $course.", credits in schedule: ".$schedule->getCurrentCredits()."<br>";
 					$schedule->addCourse($course);
 					//echo nl2br($schedule). "<br><br>";
 					if ($schedule->full()) {
-                        // echo "yes<br>";
+						//echo "yes" ."<br><br><br><br>";
 						array_push($this->schedules, clone $schedule);
 						$schedule->removeCourse($course);
 					}
-					$this->generateSchedulesHelper($currentIndex+1, clone $schedule);
+					$this->generateSchedulesHelper(++$currentIndex, $schedule);
 					$schedule->removeCourse($course);
 				}
 			}
@@ -211,5 +209,4 @@ class Schedules {
 		return implode("\n\n", array_values($this->getSchedules()));
 	}
 }
-
 ?>
