@@ -3,14 +3,23 @@
   <head>
     <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <meta charset="utf-8">
 
-    <title>Test Html</title>
+    <title>Capstone</title>
   </head>
   <body>
     <div class="dropdown-con">
+      <button id="titleButton">Search By Title</button>
+      <button id="codeButton">Search By Course Code</button>
     </div>
     <div class="classes-added">
+        <ul class="classes-added-list"></ul>
+        <span>Credits:</span> <input type="text" id="credits" maxlength="2" size="2" name="credits" value="">
+        <br>
+        <input type="button" id="generate" name="generate" value="Generate Schedules">
+    </div>
+    <div class="schedules">
     </div>
   </body>
 </html>
