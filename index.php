@@ -1,21 +1,24 @@
 <?php
 include 'schedule-tool.php';
 
-$coursesByTitle = [];
+function formatTime($time) {
+	if (strlen($time) == 5) {
+		$time = "0".$time;
+	}
+	return substr($time, 0, 2) . ":" . substr($time, 2, 2);
+}
 
-// Uncomment the following line for testing
-//$sections = file('options.txt');
-foreach ($sections as $line) {
-	list($crn, $course, $instructor, $title, $days, $time, $credits) = explode(',', $line);
+$file = file('options.txt');
+$coursesByTitle = [];
+foreach ($file as $line) {
+	list($crn, $course, $instructor, $title, $days, $time, $credits, $category) = explode(',', $line);
 	if (!array_key_exists($title, $coursesByTitle)) {
 		$coursesByTitle[$title] = [];
 	}
-	array_push($coursesByTitle[$title], new Course($crn, $course, $instructor, $title, $days, $time, $credits));
+	array_push($coursesByTitle[$title], new Course($crn, $course, $instructor, $title, $days, $time, $credits, $category));
 }
 
-$numCredits = intval($_POST["credits"]);
-
-$schedules = new Schedules($coursesByTitle, $numCredits);
+$schedules = new Schedules($coursesByTitle, 18);
 echo nl2br($schedules);
 echo "<br>".count($schedules->getSchedules());
 

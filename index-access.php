@@ -15,26 +15,33 @@ if (!$conn) {
 }
 $sql="SHOW DATABASES";
 
-$titles = explode(",", $_POST["titles"]);
-$sections = [];
+$titles = ["Principles Of Marketing","Abnormal Psychology"];
+$rClasses = "";
+
 foreach ($titles as $title) {
   $query = "SELECT crn, subject_code, course_number, instructor_fname, instructor_lname, course_title, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, start_time, end_time, credit_hrs FROM vw_class_info WHERE course_title = \"{$title}\"";
   // Would output:
   // SELECT `title` FROM `table` WHERE `id` = '5'
 
   if (!($result=mysqli_query($conn,$query))) {
-    echo "Error:". mysqli_error($conn). "\n";
+    printf("Error: %s\n", mysqli_error($conn));
   }
 
   while ($row = $result->fetch_row()) {
+      //old old code printf ("%s (%s)\n", $row[5], $row[6]);
       $classRows = "$row[0], $row[1]$row[2], $row[3] $row[4], $row[5], $row[6]$row[7]$row[8]$row[9]$row[10]$row[11]$row[12], $row[13]-$row[14], $row[15]";
-      //echo nl2br($classRows."\n");
-      array_push($sections, $classRows);
+      echo nl2br($classRows."\n");
+      $rClasses.=$classRows."\n";
   }
 }
+// Notice the subtraction from $current_id
 $conn->close();
 
-include 'index.php';
 }
+function retrieveData(){
+
+}
+
 connectToDatabase();
+retrieveData();
  ?>
