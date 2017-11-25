@@ -1,79 +1,41 @@
 $(document).ready(function(){
 
-  $("#titleButton").click(function(){
-    $(".titleDropdown").show();
-    $(".codeDropdown").hide();
-  });
-  $("#codeButton").click(function(){
-    $(".codeDropdown").show();
-    $(".titleDropdown").hide();
-  });
-
-  var getting = $.get("dropdown.php");
-  getting.done(function(data) {
-
-  $(".dropdown-con").prepend(data);
-  console.log(data);
-  $(".codeDropdown").hide();
-
-  $("#submitByTitle").click(function(){
-      if (!$(".title").length) {
-        $(".classes-added").prepend("<h1> Classes Selected </h1>");
-      }
-      var $title = $("#titles option:selected");
-      $(".classes-added-list").append(
-          '<li class="title"> <span class="courseTitle">'+
-          $title.val()+
-          '</span> <span class="removeCourse">Remove</span> </li>');
-      $title.attr('disabled','disabled');
-      $('#titles').children('option:enabled').eq(0).prop('selected',true);
+    $("#titleButton").click(function(){
+        toggle($(".titleDropdown"), $(".codeDropdown"));
+    });
+    $("#codeButton").click(function(){
+        toggle($(".codeDropdown"), $(".titleDropdown"));
     });
 
-    $("#submitByCode").click(function(){
-        if (!$(".title").length) {
-          var $classes_added = $(".classes-added");
-          $classes_added.prepend("<h1> Classes Selected </h1>");
-        }
-        var $courseNumber = $("#courseNumbers option:selected");
-        $(".classes-added-list").append(
-            '<li class="title"> <span class="courseTitle">'+
-            $courseNumber.val()+
-            '</span> <span class="removeCourse">Remove</span> </li>');
-        $courseNumber.attr('disabled','disabled');
-        $('#titles').children('option:enabled').eq(0).prop('selected',true);
-    });
+    var getting = $.get("dropdown.php");
+    getting.done(function(data) {
 
-    getNumbers($("#codes option:selected").text());
+        $(".dropdown-con").prepend(data);
+        $(".codeDropdown").hide();
 
-    $("#codes").change(function(){
+        $("#submitByTitle").click(function(){
+            addClassToCart($("#titles"), $("#courseNumbers"));
+        });
+
+        $("#submitByCode").click(function(){
+            addClassToCart($("#courseNumbers"), $("#titles"));
+        });
+
         getNumbers($("#codes option:selected").text());
-    });
 
-    $(".classes-added-list").on("click", ".removeCourse", function() {
-        var courseTitle = $(this).parent().find(".courseTitle").text();
-        addToSelect($("#titles"), courseTitle);
-        $(this).parent().remove();
-        $("#titles option[value='"+courseTitle+"']").attr("disabled", false);
-        $('#titles').children('option:enabled').eq(0).prop('selected',true);
-        if (!$(".title").length) {
-          $(".classes-added h1").remove();
-        }
-    });
+        $("#codes").change(function(){
+            getNumbers($("#codes option:selected").text());
+        });
 
-    $("#generate").click(function() {
-        $(".schedules").empty();
-        $(".schedules").append("<h1>Possible Schedules</h1>");
-        var titles = [];
-        $('.courseTitle').each(function() {
-            titles.push($(this).text());
+        $(".classes-added-list").on("click", ".removeCourse", function() {
+            var courseTitle = $(this).parent().find(".courseTitle").text();
+            $(this).parent().remove();
+            enableDropDowns(courseTitle);
         });
-        var credits = $("#credits").val();
-        console.log(credits);
-        var posting = $.post("index-access.php", { titles: titles.join(","), credits: credits });
-        posting.done(function(data){
-            $(".schedules").append(data);
+
+        $("#generate").click(function() {
+            generateSchedules();
         });
-    });
 
   }).fail(function(err,status){
     alert("err");
@@ -81,23 +43,73 @@ $(document).ready(function(){
 
 });
 
-function addToSelect($select, option) {
-    var added = false;
-    $select.find("option").each(function() {
-        if ($(this).text().localeCompare(option) > 0) {
-            var optionTag = '<'
-        }
-    });
-}
-
 function getNumbers(subject_code) {
   $("#courseNumbers").empty();
   var getNums = $.post("courseNumbers.php",{
     subject_code: subject_code
   })
   getNums.done(function(data){
-    console.log(subject_code);
     $("#courseNumbers").append(data);
+    $("#courseNumbers option").each(function() {
+        if ($(".classes-added-list").text().indexOf($(this).val())>-1) {
+            $(this).attr('disabled','disabled');
+        };
+    });
   })
 
+}
+
+function toggle($toShow, $toHide) {
+    $toShow.show();
+    $toHide.hide();
+}
+
+function addClassToCart($main, $other) {
+    if (!$(".title").length) {
+        $(".classes-added").prepend("<h1> Classes Selected </h1>");
+    }
+
+    var $course = $main.find("option:selected");
+    var title = $course.val().split(" - ")[0];
+
+    $(".classes-added-list").append(
+        '<li class="title"> <span value="'+title+'"class="courseTitle">'+
+        $course.val()+
+        '</span> <span class="removeCourse">Remove</span> </li>');
+
+    $course.attr('disabled','disabled');
+    $main.children('option:enabled').eq(0).prop('selected',true);
+
+    $courseInOther = $other.find("option[value='"+$course.val()+"']");
+    if ($courseInOther.length) {
+        $courseInOther.attr('disabled','disabled');
+        $other.children('option:enabled').eq(0).prop('selected',true);
+    }
+}
+
+function enableDropDowns(courseTitle) {
+    enableDropDown($("#titles"), courseTitle);
+    enableDropDown($("#courseNumbers"), courseTitle);
+    if (!$(".title").length) {
+      $(".classes-added h1").remove();
+    }
+}
+
+function enableDropDown($dropdown, courseTitle) {
+    $dropdown.find("option[value='"+courseTitle+"']").attr("disabled", false);
+    $dropdown.children('option:enabled').eq(0).prop('selected',true);
+}
+
+function generateSchedules() {
+    $(".schedules").empty();
+    $(".schedules").append("<h1>Possible Schedules</h1>");
+    var titles = [];
+    $('.courseTitle').each(function() {
+        titles.push($(this).attr("value"));
+    });
+    var credits = $("#credits").val();
+    var posting = $.post("courseDB.php", { titles: titles.join(","), credits: credits });
+    posting.done(function(data){
+        $(".schedules").append(data);
+    });
 }

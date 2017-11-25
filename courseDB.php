@@ -33,6 +33,7 @@ foreach ($titles as $title) {
   }
 }
 $conn->close();
+
 include 'index.php';
 }
 connectToDatabase();

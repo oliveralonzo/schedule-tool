@@ -29,7 +29,10 @@ $courseTitleArray = array();
 $subjectCodeArray = array();
 while($row = $result->fetch_assoc()) {
     $courseTitleArray[] = str_replace('"',"",$row['course_title']) . " && " . $row['subject_code'] . $row['course_number'];
-    $subjectCodeArray[] = $row['subject_code'];
+    $subjectCode = $row['subject_code'];
+    if (!in_array($subjectCode,$subjectCodeArray)) {
+        array_push($subjectCodeArray, $subjectCode);
+    }
 }
 
 $conn->close();
