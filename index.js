@@ -142,7 +142,7 @@ function generateSchedules() {
     });
 
     var credits = $("#credits").val();
-    var posting = $.post("courseDB.php", { titles: titles.join(","), credits: credits, blocks: blocks.join(",") });
+    var posting = $.post("courseDB.php", { titles: titles.join(" && "), credits: credits, blocks: blocks.join(" && ") });
     posting.done(function(data){
         $(".schedules").append(data);
     });

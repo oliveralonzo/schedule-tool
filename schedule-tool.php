@@ -229,7 +229,8 @@ class Schedules {
 
 	private function generateSchedulesHelper($currentIndex, $schedule) {
 		$numTitles = count($this->courseTitles);
-		if ($currentIndex <= $numTitles) {
+    // 25 IS SET AS A CONSTANT, MAKE IT A VARIABLE
+		if ($currentIndex <= $numTitles and count($this->schedules) < 25) {
 			for ($i = $currentIndex; $i<$numTitles; $i++) {
 				$currentTitle = $this->courseTitles[$i];
 				foreach ($this->coursesByTitle[$currentTitle] as $course) {
@@ -239,6 +240,8 @@ class Schedules {
 					if ($schedule->full()) {
                         // echo "yes<br>";
 						array_push($this->schedules, clone $schedule);
+            // Costly, try to find another way
+            $this->schedules = array_unique($this->schedules);
 						$schedule->removeCourse($course);
 					}
 					$this->generateSchedulesHelper($currentIndex+1, clone $schedule);

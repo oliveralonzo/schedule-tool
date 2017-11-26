@@ -23,7 +23,7 @@ $numCredits = intval($_POST["credits"]);
 
 $blocks = $_POST["blocks"];
 if (!empty($blocks)) {
-	$blocks = explode(",", $blocks);
+	$blocks = explode(" && ", $blocks);
 } else {
 	$blocks = [];
 }
