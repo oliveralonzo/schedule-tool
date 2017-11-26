@@ -31,7 +31,7 @@ if (!empty($blocks)) {
 }
 
 $schedules = new Schedules($coursesByTitle, $numCredits, $blocks);
-echo nl2br($schedules);
-echo "<br>".count($schedules->getSchedules());
+echo $schedules;
+
 
 ?>

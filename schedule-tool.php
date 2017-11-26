@@ -195,7 +195,9 @@ class Schedule {
 	}
 
 	public function __toString() {
-		return implode("\n", $this->courses)."\ncredit hours:".$this->credits."\n";
+		return implode("\n", $this->courses);
+    //Add if you want to print credit hours
+    //."\ncredit hours:".$this->credits."\n";
 	}
 
 	public function equals($other) {

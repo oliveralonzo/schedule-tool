@@ -116,7 +116,6 @@ function addClassToCart($main, $other) {
         $other.children('option:enabled').eq(0).prop('selected',true);
     }
     initSemantic();
-    refreshSemantic();
 }
 
 function enableDropDowns(courseTitle) {
@@ -148,8 +147,8 @@ function generateSchedules() {
     var credits = $("#credits").val();
     var posting = $.post("courseDB.php", { titles: titles.join(" && "), credits: credits, blocks: blocks.join(" && ") });
     posting.done(function(data){
-        $(".schedules .content").html(data);
-        $(".schedules").modal('refresh');
+        //$(".schedules .content").html(data);
+        processSchedules(data);
     });
     $(".schedules").modal('show');
 }
@@ -185,4 +184,40 @@ function initSemantic() {
 
 function refreshSemantic() {
   $("#titles").dropdown('refresh');
+}
+
+function createEvent(startTime, endTime, title, eventCount) {
+  return `<li class="single-event" data-start="${startTime}" data-end="${endTime}" data-content="event-abs-circuit" data-event="event-${eventCount}">
+    <a href="#0">
+      <em class="event-name">${title}</em>
+    </a>
+  </li>`
+}
+
+function formatTime(time){
+  return time.substring(0, 2)+":"+time.substring(2);
+}
+
+function processSchedules(data){
+  var schedules = data.split("\n\n");
+  schedules.forEach(function(schedule){
+    $.get("template/index.html",function(data){
+      $(".schedules .content").append(data);
+      var courses = schedule.split("\n");
+      courses.forEach(function(course){
+        var info = course.split(", ");
+        var title = info[3];
+        var times = info[4].split(" && ");
+        times.forEach(function(time) {
+          var days = time.split(" ")[0];
+          var hours = time.split(" ")[1].split("-");
+          for (var i=0; i<days.length; i++) {
+            $(".schedules .content .cd-schedule:last-child #" + days[i]).append(
+              createEvent(formatTime(hours[0]), formatTime(hours[1]), title, i));
+          }
+        });
+      })
+    });
+  });
+  $(".schedules").modal('refresh');
 }
