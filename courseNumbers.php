@@ -19,7 +19,7 @@ $sql="SHOW DATABASES";
 /////////////////////////
 $subjectCode = $_POST["subject_code"];
 
-$query = "SELECT DISTINCT course_number, course_title FROM vw_class_info WHERE subject_code = '".$subjectCode."'";
+$query = "SELECT DISTINCT course_number, course_title, credit_hrs FROM vw_class_info WHERE subject_code = '".$subjectCode."'";
 // Would output:
 // SELECT `title` FROM `table` WHERE `id` = '5'
 
@@ -29,7 +29,7 @@ if (!($result=mysqli_query($conn,$query))) {
 
 $courseNumbersArray = array();
 while($row = $result->fetch_assoc()) {
-  $courseNumbersArray[] = str_replace('"',"",$row['course_number']) . " && " . $row['course_title'];
+  $courseNumbersArray[] = str_replace('"',"",$row['course_number']) . " && " . $row['course_title']. " && " . $row['credit_hrs'];
 }
 
 $conn->close();
@@ -37,7 +37,7 @@ $conn->close();
 asort($courseNumbersArray);
 foreach ($courseNumbersArray as $i => $num) {
   $values = explode(" && ", $num);
-  echo '<option value="'.$values[1].' - '.$subjectCode.$values[0].'">'.$values[0].'</option>';
+  echo '<option title="'.$values[1].'" course="'.$subjectCode.$values[0].'" credits="'.$values[2].'">'.$values[0].'</option>';
 }
 
 }

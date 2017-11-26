@@ -13,6 +13,10 @@ $(document).ready(function(){
         $(".dropdown-con").prepend(data);
         $(".codeDropdown").hide();
 
+        $("#timeRes").click(function() {
+          $(".dateTimeLimit").toggle();
+        });
+
         $("#submitByTitle").click(function(){
             addClassToCart($("#titles"), $("#courseNumbers"));
         });
@@ -28,13 +32,23 @@ $(document).ready(function(){
         });
 
         $(".classes-added-list").on("click", ".removeCourse", function() {
-            var courseTitle = $(this).parent().find(".courseTitle").text();
+            var courseTitle = $(this).parent().find(".courseTitle").attr("value");
             $(this).parent().remove();
             enableDropDowns(courseTitle);
         });
 
+        $(".activeRestrictions").on("click", ".removeRestriction", function() {
+            $(this).parent().remove();
+        });
+
         $("#generate").click(function() {
             generateSchedules();
+        });
+
+        $("#subTimeLimit").click(function() {
+            addRestriction();
+            clearRestrictionsForm();
+            $(".dateTimeLimit").toggle();
         });
 
   }).fail(function(err,status){
@@ -53,7 +67,7 @@ function getNumbers(subject_code) {
     $courseNumbers.append(data);
     $courseNumbers.find("option").each(function() {
         if ($(".classes-added-list").text().indexOf($(this).val())>-1) {
-            $(this).attr('disabled','disabled');
+            $(this).attr('disabled','disabled');1
         };
     });
     $courseNumbers.children('option:enabled').eq(0).prop('selected',true);
@@ -72,12 +86,24 @@ function addClassToCart($main, $other) {
     }
 
     var $course = $main.find("option:selected");
-    var title = $course.val().split(" - ")[0];
+    var title = $course.attr("title");
+    var course = $course.attr("course");
+    var credits = $course.attr("credits");
+    var variCredits = '';
+
+    if (credits == "") {
+      variCredits = '<input type="text" maxlength="1" size="2" value="" name="credits">';
+    }
 
     $(".classes-added-list").append(
-        '<li class="title"> <span value="'+title+'"class="courseTitle">'+
-        $course.val()+
-        '</span> <span class="removeCourse">Remove</span> </li>');
+        '<li class="title"> <span value="'+title+'" credits="'+credits+'"class="courseTitle">'+
+        title+" - "+course+" - "+credits+variCredits+
+        '</span> <span class="removeCourse remove">Remove</span> </li>');
+
+    $('input[name="credits"]').change(function () {
+      var credits = $(this).val();
+      $(this).parent().attr("credits", credits);
+    });
 
     $course.attr('disabled','disabled');
     $main.children('option:enabled').eq(0).prop('selected',true);
@@ -98,8 +124,8 @@ function enableDropDowns(courseTitle) {
 }
 
 function enableDropDown($dropdown, courseTitle) {
-    $dropdown.find("option[value='"+courseTitle+"']").attr("disabled", false);
-    $dropdown.children('option:enabled').eq(0).attr("selected",true);
+    $dropdown.find("option[title='"+courseTitle+"']").attr("disabled", false);
+    $dropdown.children('option:enabled').eq(0).prop("selected",true);
 }
 
 function generateSchedules() {
@@ -114,4 +140,27 @@ function generateSchedules() {
     posting.done(function(data){
         $(".schedules").append(data);
     });
+}
+
+function addRestriction() {
+  // format is MWTR 0000-000
+  var startTime = $("#startTime").val();
+  var endTime = $("#endTime").val();
+  var days = "";
+   $('.dayCheckboxes input:checked').each(function(){
+     days+= $(this).val();
+   });
+   var element = '<li value="test" class="restriction">'+days+" "+
+   startTime+"-"+endTime+" - "+
+   '<span class="removeRestriction remove">Remove</span></li>';
+
+   if ($('.dayCheckboxes input:checked').length > 0 && $(".activeRestrictions").html().indexOf(element)<0){
+     $(".activeRestrictions").append(element);
+   }
+}
+
+function clearRestrictionsForm(){
+  $(".dayCheckboxes input").prop("checked", false);
+  $("#startTime").val("");
+  $("#endTime").val("");
 }
