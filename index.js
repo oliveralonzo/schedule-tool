@@ -78,12 +78,12 @@ function toggle($toShow, $toHide) {
 }
 
 function addClassToCart($course) {
-    if (!$(".title").length) {
-        $(".classes-added").prepend("<h1> Classes Selected </h1>");
-    }
-
     var title = $course.attr("title");
-    if ($(".classes-added-list").text().indexOf(title)<0) {
+    if (title && $(".classes-added-list").text().indexOf(title)<0) {
+      if (!$(".title").length) {
+          $(".classes-added").prepend("<h1> Classes Selected </h1>");
+      }
+      
       var course = $course.attr("course");
       var credits = $course.attr("credits");
       var variCredits = '';
