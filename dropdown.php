@@ -46,6 +46,7 @@ $resultDrop = "";
 //print_r($subjectCodeArray);
 echo '<div class="titleDropdown">';
 echo '<select id="titles" name="credits" onchange="" class="ui search selection dropdown">';
+echo '<option value=""> Search by Title... </option>';
 foreach ($courseTitleArray as $i => $title) {
   if ($i == 0){
     continue;
@@ -62,6 +63,7 @@ echo '</div>';
 ////////////////////////
 echo '<div class="codeDropdown">';
 echo '<select id="codes" name="credits" onchange="" class="ui search selection dropdown">';
+echo '<option value=""> Search by Code... </option>';
 foreach ($subjectCodeArray as $i => $code) {
   if ($i == 0){
     continue;
