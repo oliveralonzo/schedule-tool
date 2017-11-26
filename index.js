@@ -66,7 +66,7 @@ function getNumbers(subject_code) {
     var $courseNumbers = $("#courseNumbers");
     $courseNumbers.append(data);
     $courseNumbers.find("option").each(function() {
-        if ($(".classes-added-list").text().indexOf($(this).val())>-1) {
+        if ($(".classes-added-list").text().indexOf($(this).prop("title"))>-1) {
             $(this).attr('disabled','disabled');1
         };
     });
@@ -135,8 +135,14 @@ function generateSchedules() {
     $('.courseTitle').each(function() {
         titles.push($(this).attr("value"));
     });
+
+    var blocks = [];
+    $('.restriction').each(function() {
+      blocks.push($(this).text());
+    });
+
     var credits = $("#credits").val();
-    var posting = $.post("courseDB.php", { titles: titles.join(","), credits: credits });
+    var posting = $.post("courseDB.php", { titles: titles.join(","), credits: credits, blocks: blocks.join(",") });
     posting.done(function(data){
         $(".schedules").append(data);
     });
@@ -150,9 +156,9 @@ function addRestriction() {
    $('.dayCheckboxes input:checked').each(function(){
      days+= $(this).val();
    });
-   var element = '<li value="test" class="restriction">'+days+" "+
-   startTime+"-"+endTime+" - "+
-   '<span class="removeRestriction remove">Remove</span></li>';
+   var element = '<li value="test"><span class="restriction">'+days+" "+
+   startTime+"-"+endTime+
+   ' </span><span class="removeRestriction remove">Remove</span></li>';
 
    if ($('.dayCheckboxes input:checked').length > 0 && $(".activeRestrictions").html().indexOf(element)<0){
      $(".activeRestrictions").append(element);

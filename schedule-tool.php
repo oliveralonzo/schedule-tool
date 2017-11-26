@@ -14,7 +14,6 @@ class Course {
         $this->course = $course;
         $this->instructor = $instructor;
         $this->title = $title;
-        $this->days = strtoupper($days);
         $this->times = [];
         $this->processTimes($times);
         $this->credits= $credits;
@@ -22,10 +21,12 @@ class Course {
     }
 
     private function processTimes($times) {
-        $timesArray = explode(" && ", $times);
-        foreach ($timesArray as $times) {
-            $days_hours = explode(" ", trim($times));
-            $this->times[$days_hours[0]] = $days_hours[1];
+        if (!empty($times)) {
+          $timesArray = explode(" && ", $times);
+          foreach ($timesArray as $times) {
+              $days_hours = explode(" ", trim($times));
+              $this->times[$days_hours[0]] = $days_hours[1];
+          }
         }
     }
 
@@ -36,7 +37,7 @@ class Course {
     public function getTimesString() {
         $times = "";
         $last_days = end(array_keys($this->getTimes()));
-        foreach ($this->getTimes() as $days=>$hours) {
+        foreach ($this->times as $days=>$hours) {
             $times .= $days . " " . $hours;
             if (strcmp($last_days, $days) != 0) {
               $times .= " && ";
@@ -124,11 +125,23 @@ class Schedule {
 	private $maxCredits;
 	private $credits;
 
-	function __construct($maxCredits) {
+	function __construct($maxCredits, $blocks) {
 		$this->courses = [];
 		$this->maxCredits = $maxCredits;
 		$this->credits = 0;
+    $this->addBlocks($blocks);
 	}
+
+  private function addBlocks($blocks) {
+    if (count($blocks)>0) {
+        $dummy = new Course("", "", "Block", "", "", "0");
+        foreach ($blocks as $block) {
+          $dummy->addTimes($block);
+        }
+        $this->addCourse($dummy);
+        //echo $dummy;
+    }
+  }
 
 	public function getCourses() {
 		return $this->courses;
@@ -193,20 +206,20 @@ class Schedules {
 	private $amount;
 	private $maxCredits;
 
-	function __construct($coursesByTitle, $maxCredits) {
+	function __construct($coursesByTitle, $maxCredits, $blocks) {
 		$this->amount = 0;
 		$this->coursesByTitle = $coursesByTitle;
 		$this->courseTitles = array_keys($coursesByTitle);
 		$this->maxCredits = $maxCredits;
 		$this->schedules = [];
-		$this->generateSchedules();
+		$this->generateSchedules($blocks);
 	}
 
-	private function generateSchedules() {
+	private function generateSchedules($blocks) {
 		$numTitles = count($this->courseTitles);
 		for ($i = 0; $i<$numTitles; $i++) {
 			//echo "larger restart: " . $i ."<br><br><br><br>";
-			$this->generateSchedulesHelper($i, new Schedule($this->maxCredits));
+			$this->generateSchedulesHelper($i, new Schedule($this->maxCredits, $blocks));
 		}
 	}
 

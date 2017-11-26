@@ -21,7 +21,14 @@ foreach ($sections as $line) {
 
 $numCredits = intval($_POST["credits"]);
 
-$schedules = new Schedules($coursesByTitle, $numCredits);
+$blocks = $_POST["blocks"];
+if (!empty($blocks)) {
+	$blocks = explode(",", $blocks);
+} else {
+	$blocks = [];
+}
+
+$schedules = new Schedules($coursesByTitle, $numCredits, $blocks);
 echo nl2br($schedules);
 echo "<br>".count($schedules->getSchedules());
 
