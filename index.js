@@ -150,7 +150,6 @@ function generateSchedules() {
         //$(".schedules .content").html(data);
         processSchedules(data);
     });
-    $(".schedules").modal('show');
 }
 
 function addRestriction() {
@@ -219,5 +218,6 @@ function processSchedules(data){
       })
     });
   });
+  $(".schedules").modal('show');
   $(".schedules").modal('refresh');
 }
