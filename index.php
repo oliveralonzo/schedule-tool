@@ -1,4 +1,6 @@
 <?php
+error_reporting(0); // stops annoying notice
+
 include 'schedule-tool.php';
 
 $coursesByTitle = [];

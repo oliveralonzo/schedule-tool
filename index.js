@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+
+
     $("#titleButton").click(function(){
         toggle($(".titleDropdown"), $(".codeDropdown"));
     });
@@ -50,7 +52,7 @@ $(document).ready(function(){
             clearRestrictionsForm();
             $(".dateTimeLimit").toggle();
         });
-
+        initSemantic();
   }).fail(function(err,status){
     alert("err");
   });
@@ -113,6 +115,8 @@ function addClassToCart($main, $other) {
         $courseInOther.attr('disabled','disabled');
         $other.children('option:enabled').eq(0).prop('selected',true);
     }
+    initSemantic();
+    refreshSemantic();
 }
 
 function enableDropDowns(courseTitle) {
@@ -129,8 +133,8 @@ function enableDropDown($dropdown, courseTitle) {
 }
 
 function generateSchedules() {
-    $(".schedules").empty();
-    $(".schedules").append("<h1>Possible Schedules</h1>");
+    $(".schedules .content").empty();
+    $(".schedules").prepend('');
     var titles = [];
     $('.courseTitle').each(function() {
         titles.push($(this).attr("value"));
@@ -144,8 +148,10 @@ function generateSchedules() {
     var credits = $("#credits").val();
     var posting = $.post("courseDB.php", { titles: titles.join(" && "), credits: credits, blocks: blocks.join(" && ") });
     posting.done(function(data){
-        $(".schedules").append(data);
+        $(".schedules .content").html(data);
+        $(".schedules").modal('refresh');
     });
+    $(".schedules").modal('show');
 }
 
 function addRestriction() {
@@ -169,4 +175,14 @@ function clearRestrictionsForm(){
   $(".dayCheckboxes input").prop("checked", false);
   $("#startTime").val("");
   $("#endTime").val("");
+}
+
+function initSemantic() {
+  $("#titles").dropdown();
+  $("#codes").dropdown();
+  $("#courseNumbers").dropdown();
+}
+
+function refreshSemantic() {
+  $("#titles").dropdown('refresh');
 }
