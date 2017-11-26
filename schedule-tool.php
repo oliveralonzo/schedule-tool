@@ -239,6 +239,8 @@ class Schedules {
 					if ($schedule->full()) {
                         // echo "yes<br>";
 						array_push($this->schedules, clone $schedule);
+            // Costly, try to find another way
+            $this->schedules = array_unique($this->schedules);
 						$schedule->removeCourse($course);
 					}
 					$this->generateSchedulesHelper($currentIndex+1, clone $schedule);
