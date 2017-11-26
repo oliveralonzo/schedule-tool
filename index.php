@@ -6,11 +6,17 @@ $coursesByTitle = [];
 // Uncomment the following line for testing
 //$sections = file('options.txt');
 foreach ($sections as $line) {
-	list($crn, $course, $instructor, $title, $days, $time, $credits) = explode(',', $line);
+	list($crn, $course, $instructor, $title, $times, $credits) = explode(',', $line);
 	if (!array_key_exists($title, $coursesByTitle)) {
 		$coursesByTitle[$title] = [];
 	}
-	array_push($coursesByTitle[$title], new Course($crn, $course, $instructor, $title, $days, $time, $credits));
+	$current = $coursesByTitle[$title][$crn];
+	if (empty($current)) {
+			$coursesByTitle[$title][$crn] = new Course($crn, $course, $instructor, $title, $times, $credits);
+	} else {
+			$current->addTimes($times);
+			$coursesByTitle[$title][$crn] = $current;
+	}
 }
 
 $numCredits = intval($_POST["credits"]);

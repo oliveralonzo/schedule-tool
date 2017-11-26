@@ -5,36 +5,52 @@ class Course {
     private $course;
     private $instructor;
     private $title;
-    private $days;
-    private $time;
+    private $times;
     private $credits;
     //private $category;
 
-    function __construct($crn, $course, $instructor, $title, $days, $time, $credits) {
+    function __construct($crn, $course, $instructor, $title, $times, $credits) {
         $this->crn = $crn;
         $this->course = $course;
         $this->instructor = $instructor;
         $this->title = $title;
         $this->days = strtoupper($days);
-        $this->time = $time;
+        $this->times = [];
+        $this->processTimes($times);
         $this->credits= $credits;
         //$this->category = $category;
     }
 
-   public function getCrn() {
+    private function processTimes($times) {
+        $timesArray = explode(" && ", $times);
+        foreach ($timesArray as $times) {
+            $days_hours = explode(" ", trim($times));
+            $this->times[$days_hours[0]] = $days_hours[1];
+        }
+    }
+
+    public function getTimes() {
+      return $this->times;
+    }
+
+    public function getTimesString() {
+        $times = "";
+        $last_days = end(array_keys($this->getTimes()));
+        foreach ($this->getTimes() as $days=>$hours) {
+            $times .= $days . " " . $hours;
+            if (strcmp($last_days, $days) != 0) {
+              $times .= " && ";
+            }
+        }
+        return $times;
+    }
+
+    public function getCrn() {
         return $this->crn ;
     }
 
     public function getCourse() {
         return $this->course ;
-    }
-
-    public function getDays() {
-        return $this->days ;
-    }
-
-    public function getTime() {
-        return trim($this->time);
     }
 
     public function getTitle() {
@@ -49,24 +65,36 @@ class Course {
         return $this->credits ;
     }
 
+    public function addTimes($times) {
+        $days_hours = explode(" ", trim($times));
+        $this->times[$days_hours[0]] = $days_hours[1];
+    }
+
     // public function getCategory() {
     //     return $this->category ;
     // }
 
     public function __toString() {
-        return implode(', ', array($this->crn, $this->course, $this->instructor, $this->title, $this->days, $this->time, $this->credits));
+        return implode(', ', array($this->crn, $this->course, $this->instructor, $this->title, $this->getTimesString(), $this->credits));
     }
 
     public function checkConflicts($other) {
-        return $this->checkDayConflict($other) == true and $this->checkTimeConflict($other) == true;
+        foreach ($this->getTimes() as $this_days=>$this_hours) {
+            foreach ($other->getTimes() as $other_days=>$other_hours) {
+                if ($this->checkDayConflict(trim($this_days), trim($other_days)) == true and $this->checkTimeConflict(trim($this_hours), trim($other_hours)) == true) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
-    public function checkDayConflict($other) {
-        if (strcmp($this->getDays(), "ONLINE") == 0 or strcmp($other->getDays(), "ONLINE") == 0) {
+    public function checkDayConflict($this_days, $other_days) {
+        if (strcmp($this_days, "ONLINE") == 0 or strcmp($other_days, "ONLINE") == 0) {
             return false;
         } else {
-            foreach (str_split($this->getDays()) as $day) {
-                if (strpos($other->getDays(), $day) != false) {
+            foreach (str_split($this_days) as $day) {
+                if (strpos($other_days, $day) != false) {
                     return true;
                 }
             }
@@ -74,9 +102,9 @@ class Course {
         }
     }
 
-    private function checkTimeConflict($other) {
-        $time = explode("-", $this->getTime());
-        $otherTime = explode("-", $other->getTime());
+    private function checkTimeConflict($this_hours, $other_hours) {
+        $time = explode("-", $this_hours);
+        $otherTime = explode("-", $other_hours);
         if (strcmp($time[0],$otherTime[0]) >= 0 and strcmp($time[0],$otherTime[1]) <= 0){
             return true;
         } else if (strcmp($otherTime[0],$time[0]) >= 0 and strcmp($otherTime[0],$time[1]) <= 0) {
@@ -177,7 +205,7 @@ class Schedules {
 	private function generateSchedules() {
 		$numTitles = count($this->courseTitles);
 		for ($i = 0; $i<$numTitles; $i++) {
-			//echo "restart: " . $i ."<br><br><br><br>";
+			//echo "larger restart: " . $i ."<br><br><br><br>";
 			$this->generateSchedulesHelper($i, new Schedule($this->maxCredits));
 		}
 	}
@@ -187,9 +215,9 @@ class Schedules {
 		if ($currentIndex <= $numTitles) {
 			for ($i = $currentIndex; $i<$numTitles; $i++) {
 				$currentTitle = $this->courseTitles[$i];
-				foreach($this->coursesByTitle[$currentTitle] as $course) {
-                    //echo $course.", credits in schedule: ".$schedule->getCurrentCredits()."<br>";
-					$schedule->addCourse($course);
+				foreach ($this->coursesByTitle[$currentTitle] as $course) {
+          //echo $course.", credits in schedule: ".$schedule->getCurrentCredits()."<br>";
+					$added = $schedule->addCourse($course);
 					//echo nl2br($schedule). "<br><br>";
 					if ($schedule->full()) {
                         // echo "yes<br>";
@@ -197,7 +225,9 @@ class Schedules {
 						$schedule->removeCourse($course);
 					}
 					$this->generateSchedulesHelper($currentIndex+1, clone $schedule);
-					$schedule->removeCourse($course);
+          if ($added) {
+					  $schedule->removeCourse($course);
+          }
 				}
 			}
 		}

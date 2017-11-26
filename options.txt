@@ -1,9 +1,9 @@
-11362, JRM219, Richard Johnson, Media Writing, MW, 1100-1215, 3, Journalism
-10562, JRM219, Richard Johnson, Media Writing, TR, 0800-0915, 3, Journalism
-12600, PHL270, David McPherson, Philosophical Ethics, MW, 1230-1345, 3, Ethics
-13282, ART271, Fr. Flecky, Black & White Photography, MW, 1545-1720, 3, Art
-13380, CSC414, Dr. K, Computer Organization, TR, 0930-1045, 3, Computer Science
-13196, THR131, Amy Lane, Acting I, TR, 1230-1415, 3, Theater
-13329, THL300, Ashley Hall, God and Persons, MW, 0800-0915, 1, Ultimate Questions
-13285, MTH205, Jean Lilly, Math for the Modern World, TR, 1545-1720, 3, Mathematics
-12594, PHY110, David Kriegler, Astronomy Lab, T, 1730-1930, 3, Doing Nat. Sci.
+11362, JRM219, Richard Johnson, Media Writing, MW 1100-1215, 3, Journalism
+10562, JRM219, Richard Johnson, Media Writing, TR 0800-0915, 3, Journalism
+12600, PHL270, David McPherson, Philosophical Ethics MW, 1230-1345, 3, Ethics
+13282, ART271, Fr. Flecky, Black & White Photography, MW 1545-1720, 3, Art
+13380, CSC414, Dr. K, Computer Organization, TR 0930-1045, 3, Computer Science
+13196, THR131, Amy Lane, Acting I, TR 1230-1415, 3, Theater
+13329, THL300, Ashley Hall, God and Persons, MW 0800-0915, 1, Ultimate Questions
+13285, MTH205, Jean Lilly, Math for the Modern World, TR 1545-1720, 3, Mathematics
+12594, PHY110, David Kriegler, Astronomy Lab, T 1730-1930, 3, Doing Nat. Sci.

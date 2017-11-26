@@ -99,7 +99,7 @@ function enableDropDowns(courseTitle) {
 
 function enableDropDown($dropdown, courseTitle) {
     $dropdown.find("option[value='"+courseTitle+"']").attr("disabled", false);
-    $dropdown.children('option:enabled').eq(0).attr('selected',true);
+    $dropdown.children('option:enabled').eq(0).attr("selected",true);
 }
 
 function generateSchedules() {
