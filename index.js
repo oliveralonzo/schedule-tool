@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+
+
     $("#titleButton").click(function(){
         toggle($(".titleDropdown"), $(".codeDropdown"));
     });
@@ -50,7 +52,7 @@ $(document).ready(function(){
             clearRestrictionsForm();
             $(".dateTimeLimit").toggle();
         });
-
+        initSemantic();
   }).fail(function(err,status){
     alert("err");
   });
@@ -113,6 +115,7 @@ function addClassToCart($main, $other) {
         $courseInOther.attr('disabled','disabled');
         $other.children('option:enabled').eq(0).prop('selected',true);
     }
+    initSemantic();
 }
 
 function enableDropDowns(courseTitle) {
@@ -129,8 +132,8 @@ function enableDropDown($dropdown, courseTitle) {
 }
 
 function generateSchedules() {
-    $(".schedules").empty();
-    $(".schedules").append("<h1>Possible Schedules</h1>");
+    $(".schedules .content").empty();
+    $(".schedules").prepend('');
     var titles = [];
     $('.courseTitle').each(function() {
         titles.push($(this).attr("value"));
@@ -144,8 +147,10 @@ function generateSchedules() {
     var credits = $("#credits").val();
     var posting = $.post("courseDB.php", { titles: titles.join(" && "), credits: credits, blocks: blocks.join(" && ") });
     posting.done(function(data){
-        $(".schedules").append(data);
+        //$(".schedules .content").html(data);
+        processSchedules(data);
     });
+    $(".schedules").modal('show');
 }
 
 function addRestriction() {
@@ -169,4 +174,50 @@ function clearRestrictionsForm(){
   $(".dayCheckboxes input").prop("checked", false);
   $("#startTime").val("");
   $("#endTime").val("");
+}
+
+function initSemantic() {
+  $("#titles").dropdown();
+  $("#codes").dropdown();
+  $("#courseNumbers").dropdown();
+}
+
+function refreshSemantic() {
+  $("#titles").dropdown('refresh');
+}
+
+function createEvent(startTime, endTime, title, eventCount) {
+  return `<li class="single-event" data-start="${startTime}" data-end="${endTime}" data-content="event-abs-circuit" data-event="event-${eventCount}">
+    <a href="#0">
+      <em class="event-name">${title}</em>
+    </a>
+  </li>`
+}
+
+function formatTime(time){
+  return time.substring(0, 2)+":"+time.substring(2);
+}
+
+function processSchedules(data){
+  var schedules = data.split("\n\n");
+  schedules.forEach(function(schedule){
+    $.get("template/index.html",function(data){
+      $(".schedules .content").append(data);
+      var courses = schedule.split("\n");
+      courses.forEach(function(course){
+        var info = course.split(", ");
+        var title = info[3];
+        var times = info[4].split(" && ");
+        times.forEach(function(time) {
+          var days = time.split(" ")[0];
+          var hours = time.split(" ")[1].split("-");
+          for (var i=0; i<days.length; i++) {
+            $(".schedules .content .cd-schedule:last-child #" + days[i]).append(
+              createEvent(formatTime(hours[0]), formatTime(hours[1]), title, i));
+          }
+        });
+      })
+    });
+  });
+  $(".schedules").modal('refresh');
 }

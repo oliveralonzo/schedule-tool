@@ -1,4 +1,6 @@
 <?php
+error_reporting(0); // stops annoying notice
+
 include 'schedule-tool.php';
 
 $coursesByTitle = [];
@@ -29,7 +31,7 @@ if (!empty($blocks)) {
 }
 
 $schedules = new Schedules($coursesByTitle, $numCredits, $blocks);
-echo nl2br($schedules);
-echo "<br>".count($schedules->getSchedules());
+echo $schedules;
+
 
 ?>

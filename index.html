@@ -2,21 +2,31 @@
 <html>
   <head>
     <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="semantic-ui/semantic.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
+
+    <meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
+  	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
+
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <meta charset="utf-8">
+    <link rel="stylesheet" href="semantic-ui/semantic.min.css">
 
     <title>Capstone</title>
   </head>
   <body>
     <div class="dropdown-con">
-      <button id="titleButton">Search By Title</button>
-      <button id="codeButton">Search By Course Code</button>
+      <div class="ui buttons">
+        <button id="titleButton" class="ui button">Search By Title</button>
+        <button id="codeButton" class="ui button">Search By Course Code</button>
+      </div>
     </div>
     <br>
     <div class="restrictions">
       <div class="toggleDateTime">
-        <button type="button" id="timeRes">Add Restriction</button>
+        <button type="button" id="timeRes" class="ui button">Add Restriction</button>
       </div>
       <br>
       <div class="dateTimeLimit">
@@ -41,7 +51,7 @@
           <input type="checkbox" value="S">
           <label for="s">Saturday</label>
         </div>
-        <button type="button" id="subTimeLimit">Submit</button>
+        <button type="button" id="subTimeLimit" class="ui button">Submit</button>
       </div>
       <div class="activeRestrictions">
         <h2>Time Restrictions</h2>
@@ -49,13 +59,22 @@
     </div>
     <div class="classes-added">
         <ul class="classes-added-list"></ul>
-        <span>Credits:</span> <input type="text" id="credits" maxlength="2" size="2" name="credits" value="">
+        <span>Credits:</span>
+        <div class="ui input">
+          <input type="text" id="credits" maxlength="2" size="2" name="credits" value="">
+        </div>
         <br>
-        <input type="button" id="generate" name="generate" value="Generate Schedules">
+        <input type="button" id="generate" name="generate" value="Generate Schedules" class="ui button">
     </div>
     <br>
+    <div class="schedules ui modal longer scrolling fullscreen">
+      <div class="header">Possible Schedules</div>
+      <div class="scrolling content longer">
 
-    <div class="schedules">
+        <script src="template/js/modernizr.js"></script>
+        <script src="template/js/main.js"></script>
+
+      </div>
     </div>
   </body>
 </html>

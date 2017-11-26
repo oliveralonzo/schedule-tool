@@ -45,7 +45,7 @@ $resultDrop = "";
 //print_r($courseTitleArray);
 //print_r($subjectCodeArray);
 echo '<div class="titleDropdown">';
-echo '<select id="titles" name="credits" onchange="">';
+echo '<select id="titles" name="credits" onchange="" class="ui search selection dropdown">';
 foreach ($courseTitleArray as $i => $title) {
   if ($i == 0){
     continue;
@@ -56,12 +56,12 @@ foreach ($courseTitleArray as $i => $title) {
   echo '<option title="'.$values[0].'" course="'.$values[1].'" credits="'.$values[2].'">'.$values[0].'</option>';
 }
 echo '</select>';
-echo '<input id="submitByTitle" type="button" name="add" value="Add">';
+echo '<input id="submitByTitle" type="button" name="add" value="Add" class="ui button">';
 echo '</div>';
 //echo "</form>";
 ////////////////////////
 echo '<div class="codeDropdown">';
-echo '<select id="codes" name="credits" onchange="">';
+echo '<select id="codes" name="credits" onchange="" class="ui search selection dropdown">';
 foreach ($subjectCodeArray as $i => $code) {
   if ($i == 0){
     continue;
@@ -70,10 +70,10 @@ foreach ($subjectCodeArray as $i => $code) {
 }
 echo '</select>';
 
-echo '<select id="courseNumbers" name="credits" onchange="">';
+echo '<select id="courseNumbers" name="credits" onchange="" class="ui search selection dropdown">';
 echo '</select>';
 
-echo '<input id="submitByCode" type="button" name="add" value="Add">';
+echo '<input id="submitByCode" type="button" name="add" value="Add" class="ui button">';
 echo '</div>';
 
 } //close connectAndPullTitles
