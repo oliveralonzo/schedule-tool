@@ -1,3 +1,7 @@
-.removeCourse {
+.remove {
 	text-decoration: underline;
+}
+/*Auto-hide the restrictions div on page load*/
+.dateTimeLimit{
+   display: none;
 }

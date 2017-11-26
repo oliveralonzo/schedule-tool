@@ -13,12 +13,48 @@
       <button id="titleButton">Search By Title</button>
       <button id="codeButton">Search By Course Code</button>
     </div>
+    <br>
+    <div class="restrictions">
+      <div class="toggleDateTime">
+        <button type="button" id="timeRes">Add Restriction</button>
+      </div>
+      <br>
+      <div class="dateTimeLimit">
+        <label for="startTime">From</label>
+        <input type="text" id="startTime" size="5" maxlength="4" minlength="4" value="0000">
+        <label for="endTime">To</label>
+        <input type="text" id="endTime" size="5" maxlength="4" minlength="4" value="0000">
+
+        <div class="dayCheckboxes">
+          <input type="checkbox" value="U">
+          <label for="u">Sunday</label>
+          <input type="checkbox" value="M">
+          <label for="m">Monday</label>
+          <input type="checkbox" value="T">
+          <label for="t">Tuesday</label>
+          <input type="checkbox" value="W">
+          <label for="w">Wednesday</label>
+          <input type="checkbox" value="R">
+          <label for="r">Thursday</label>
+          <input type="checkbox" value="F">
+          <label for="f">Friday</label>
+          <input type="checkbox" value="S">
+          <label for="s">Saturday</label>
+        </div>
+        <button type="button" id="subTimeLimit">Submit</button>
+      </div>
+      <div class="activeRestrictions">
+        <h2>Time Restrictions</h2>
+      </div>
+    </div>
     <div class="classes-added">
         <ul class="classes-added-list"></ul>
         <span>Credits:</span> <input type="text" id="credits" maxlength="2" size="2" name="credits" value="">
         <br>
         <input type="button" id="generate" name="generate" value="Generate Schedules">
     </div>
+    <br>
+
     <div class="schedules">
     </div>
   </body>

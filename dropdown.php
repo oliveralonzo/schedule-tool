@@ -17,7 +17,7 @@ $sql="SHOW DATABASES";
 
 
 // Notice the subtraction from $current_id
-$query = "SELECT DISTINCT course_title, subject_code, course_number FROM vw_class_info";
+$query = "SELECT DISTINCT course_title, subject_code, course_number, credit_hrs FROM vw_class_info";
 // Would output:
 // SELECT `title` FROM `table` WHERE `id` = '5'
 
@@ -28,7 +28,7 @@ if (!($result=mysqli_query($conn,$query))) {
 $courseTitleArray = array();
 $subjectCodeArray = array();
 while($row = $result->fetch_assoc()) {
-    $courseTitleArray[] = str_replace('"',"",$row['course_title']) . " && " . $row['subject_code'] . $row['course_number'];
+    $courseTitleArray[] = str_replace('"',"",$row['course_title']) . " && " . $row['subject_code'] . $row['course_number'] . " && " . $row['credit_hrs'];
     $subjectCode = $row['subject_code'];
     if (!in_array($subjectCode,$subjectCodeArray)) {
         array_push($subjectCodeArray, $subjectCode);
@@ -53,7 +53,7 @@ foreach ($courseTitleArray as $i => $title) {
 
   $values = explode(" && ", $title);
 
-  echo '<option value="'.$values[0].' - '.$values[1].'">'.$values[0].'</option>';
+  echo '<option title="'.$values[0].'" course="'.$values[1].'" credits="'.$values[2].'">'.$values[0].'</option>';
 }
 echo '</select>';
 echo '<input id="submitByTitle" type="button" name="add" value="Add">';
