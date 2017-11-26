@@ -229,7 +229,8 @@ class Schedules {
 
 	private function generateSchedulesHelper($currentIndex, $schedule) {
 		$numTitles = count($this->courseTitles);
-		if ($currentIndex <= $numTitles) {
+    // 25 IS SET AS A CONSTANT, MAKE IT A VARIABLE
+		if ($currentIndex <= $numTitles and count($this->schedules) < 25) {
 			for ($i = $currentIndex; $i<$numTitles; $i++) {
 				$currentTitle = $this->courseTitles[$i];
 				foreach ($this->coursesByTitle[$currentTitle] as $course) {
