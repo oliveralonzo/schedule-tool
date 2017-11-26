@@ -194,6 +194,14 @@ class Schedule {
 		return $this->maxCredits;
 	}
 
+  public function hash() {
+    $hash = "";
+    foreach($this->courses as $course) {
+      $hash .= $course->getCrn();
+    }
+    return $hash;
+  }
+
 	public function __toString() {
 		return implode("\n", $this->courses);
     //Add if you want to print credit hours
@@ -240,10 +248,11 @@ class Schedules {
 					$added = $schedule->addCourse($course);
 					//echo nl2br($schedule). "<br><br>";
 					if ($schedule->full()) {
-                        // echo "yes<br>";
-						array_push($this->schedules, clone $schedule);
-            // Costly, try to find another way
-            $this->schedules = array_unique($this->schedules);
+            // echo "yes<br>";
+            $hash = $schedule->hash()."<br>";
+            if (!array_key_exists($hash)) {
+						  $this->schedules[$hash] = clone $schedule;
+            }
 						$schedule->removeCourse($course);
 					}
 					$this->generateSchedulesHelper($currentIndex+1, clone $schedule);
@@ -256,7 +265,7 @@ class Schedules {
 	}
 
 	public function getSchedules() {
-		return array_unique($this->schedules);
+		return $this->schedules;
 	}
 
 	public function __toString() {
