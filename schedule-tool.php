@@ -76,7 +76,11 @@ class Course {
     // }
 
     public function __toString() {
-        return implode(', ', array($this->crn, $this->course, $this->instructor, $this->title, $this->getTimesString(), $this->credits));
+        if (empty($this->crn)) {
+          return "";
+        } else {
+          return implode(', ', array($this->crn, $this->course, $this->instructor, $this->title, $this->getTimesString(), $this->credits));
+        }
     }
 
     public function checkConflicts($other) {
@@ -95,7 +99,7 @@ class Course {
             return false;
         } else {
             foreach (str_split($this_days) as $day) {
-                if (strpos($other_days, $day) != false) {
+                if (strpos($other_days, $day) !== false) {
                     return true;
                 }
             }
@@ -134,7 +138,7 @@ class Schedule {
 
   private function addBlocks($blocks) {
     if (count($blocks)>0) {
-        $dummy = new Course("", "", "Block", "", "", "0");
+        $dummy = new Course("", "", "", "", "", "0");
         foreach ($blocks as $block) {
           $dummy->addTimes($block);
         }
