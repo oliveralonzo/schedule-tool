@@ -30,8 +30,16 @@ if (!empty($blocks)) {
 	$blocks = [];
 }
 
+// Add message if time limit is reached
+set_time_limit(10);
 $schedules = new Schedules($coursesByTitle, $numCredits, $blocks);
-echo $schedules;
+
+// Output for testing
+echo nl2br($schedules);
+echo count($schedules->getSchedules()) ."<br><br>";
+
+//Output for production
+//echo $schedules;
 
 
 ?>
