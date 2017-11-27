@@ -83,7 +83,7 @@ function addClassToCart($course) {
       if (!$(".title").length) {
           $(".classes-added").prepend("<h1> Classes Selected </h1>");
       }
-      
+
       var course = $course.attr("course");
       var credits = $course.attr("credits");
       var variCredits = '';
@@ -105,7 +105,6 @@ function addClassToCart($course) {
       // Display message for not being able to add
     }
 
-    initSemantic();
 }
 
 function generateSchedules() {
