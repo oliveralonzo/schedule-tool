@@ -36,7 +36,7 @@ $schedules = new Schedules($coursesByTitle, $numCredits, $blocks);
 
 // Output for testing
 echo nl2br($schedules);
-echo count($schedules->getSchedules()) ."<br><br>";
+echo "<br><br>".count($schedules->getSchedules()) ."<br><br>";
 
 //Output for production
 //echo $schedules;
