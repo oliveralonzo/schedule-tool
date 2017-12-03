@@ -35,11 +35,11 @@ set_time_limit(10);
 $schedules = new Schedules($coursesByTitle, $numCredits, $blocks);
 
 // Output for testing
-echo nl2br($schedules);
-echo "<br><br>".count($schedules->getSchedules()) ."<br><br>";
+// echo nl2br($schedules);
+// echo "<br><br>".count($schedules->getSchedules()) ."<br><br>";
 
 //Output for production
-//echo $schedules;
+echo $schedules;
 
 
 ?>

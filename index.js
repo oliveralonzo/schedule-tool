@@ -1,7 +1,4 @@
 $(document).ready(function(){
-
-
-
     $("#titleButton").click(function(){
         toggle($(".titleDropdown"), $(".codeDropdown"));
     });
@@ -123,11 +120,14 @@ function generateSchedules() {
     var credits = $("#credits").val();
     var posting = $.post("courseDB.php", { titles: titles.join(" && "), credits: credits, blocks: blocks.join(" && ") });
     posting.done(function(data){
-        $(".schedules .content").html(data);
-        //processSchedules(data);
-        $(".schedules").modal('refresh');
+        // Output for testing
+        // $(".schedules .content").html(data);
+        // $(".schedules").modal('refresh');
+        // $(".schedules").modal('show');
+
+        //Output for production
+        processSchedules(data);
     });
-    $(".schedules").modal('show');
 }
 
 function addRestriction() {
@@ -181,7 +181,8 @@ function processSchedules(data){
     $.get("template/index.html",function(data){
       $(".schedules .content").append(data);
       var courses = schedule.split("\n");
-      courses.forEach(function(course){
+      var eventCount = 1;
+      courses.forEach(function(course) {
         var info = course.split(", ");
         var title = info[3];
         var times = info[4].split(" && ");
@@ -190,10 +191,29 @@ function processSchedules(data){
           var hours = time.split(" ")[1].split("-");
           for (var i=0; i<days.length; i++) {
             $(".schedules .content .cd-schedule:last-child #" + days[i]).append(
-              createEvent(formatTime(hours[0]), formatTime(hours[1]), title, i));
+              createEvent(formatTime(hours[0]), formatTime(hours[1]), title, eventCount));
           }
         });
+        eventCount++;
       })
     });
   });
+  $.cachedScript("template/js/main.js").done(function () {
+    $(".schedules").modal('refresh');
+    $(".schedules").modal('show');
+  });
+  // $(".schedules").modal('refresh');
 }
+
+jQuery.cachedScript = function( url, options ) {
+  // Allow user to set any option except for dataType, cache, and url
+  options = $.extend( options || {}, {
+    dataType: "script",
+    cache: true,
+    url: url
+  });
+
+  // Use $.ajax() since it is more flexible than $.getScript
+  // Return the jqXHR object so we can chain callbacks
+  return jQuery.ajax( options );
+};
