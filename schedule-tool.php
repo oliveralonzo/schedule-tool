@@ -157,9 +157,14 @@ class Schedule {
 	}
 
 	public function addCourse($course) {
-		if ($this->courseIsContained($course) !== false or $this->getCurrentCredits() + $course->getCredits() > $this->maxCredits) {
-			return false;
-		} else {
+    if ($this->getCurrentCredits() + $course->getCredits() > $this->maxCredits) {
+      //echo "hey";
+			return "exceeds";
+		} else if ($this->courseIsContained($course) !== false) {
+      //echo "contained" . $course . "<br>";
+      return false;
+    } else {
+      //echo "added ".$course. "<br>";
 			$this->courses[] = $course;
 			$this->credits += $course->getCredits();
 			return true;
@@ -194,6 +199,14 @@ class Schedule {
 		return $this->maxCredits;
 	}
 
+  public function hash() {
+    $hash = "";
+    foreach($this->courses as $course) {
+      $hash .= $course->getCrn();
+    }
+    return $hash;
+  }
+
 	public function __toString() {
 		return implode("\n", $this->courses);
     //Add if you want to print credit hours
@@ -223,40 +236,45 @@ class Schedules {
 
 	private function generateSchedules($blocks) {
 		$numTitles = count($this->courseTitles);
-		for ($i = 0; $i<$numTitles; $i++) {
-			//echo "larger restart: " . $i ."<br><br><br><br>";
-			$this->generateSchedulesHelper($i, new Schedule($this->maxCredits, $blocks));
-		}
+		$this->generateSchedulesHelper(0, new Schedule($this->maxCredits, $blocks), $numTitles, 0);
 	}
 
-	private function generateSchedulesHelper($currentIndex, $schedule) {
-		$numTitles = count($this->courseTitles);
-    // 25 IS SET AS A CONSTANT, MAKE IT A VARIABLE
-		if ($currentIndex <= $numTitles and count($this->schedules) < 25) {
+	private function generateSchedulesHelper($currentIndex, $schedule, $numTitles, $amount) {
+		if ($currentIndex <= $numTitles) {
 			for ($i = $currentIndex; $i<$numTitles; $i++) {
-				$currentTitle = $this->courseTitles[$i];
-				foreach ($this->coursesByTitle[$currentTitle] as $course) {
-          //echo $course.", credits in schedule: ".$schedule->getCurrentCredits()."<br>";
-					$added = $schedule->addCourse($course);
-					//echo nl2br($schedule). "<br><br>";
-					if ($schedule->full()) {
-                        // echo "yes<br>";
-						array_push($this->schedules, clone $schedule);
-            // Costly, try to find another way
-            $this->schedules = array_unique($this->schedules);
-						$schedule->removeCourse($course);
-					}
-					$this->generateSchedulesHelper($currentIndex+1, clone $schedule);
-          if ($added) {
-					  $schedule->removeCourse($course);
+        if (!$schedule->full()) {
+  				$currentTitle = $this->courseTitles[$i];
+  				foreach ($this->coursesByTitle[$currentTitle] as $course) {
+  					$added = $schedule->addCourse($course);
+            if ($added === true) {
+    					if ($schedule->full()) {
+                $hash = $schedule->hash()."<br>";
+                if (!isset($this->schedules[$hash])) {
+    						  $this->schedules[$hash] = clone $schedule;
+                }
+    						$schedule->removeCourse($course);
+    					}
+    					$this->generateSchedulesHelper($currentIndex+1, clone $schedule, $numTitles, $amount);
+    					$schedule->removeCourse($course);
+            } else if ($added === "exceeds") {
+              break;
+            }
+            // 25 IS SET AS A CONSTANT, MAKE IT A VARIABLE
+            if (count($this->schedules) == 25) {
+              return;
+            }
+  				}
+          $newAmount = count($this->schedules);
+          if (count($this->schedules) == 0 and $i == $numTitles-1) {
+            return;
           }
-				}
+        }
 			}
 		}
 	}
 
 	public function getSchedules() {
-		return array_unique($this->schedules);
+		return $this->schedules;
 	}
 
 	public function __toString() {
