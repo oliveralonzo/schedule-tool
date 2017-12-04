@@ -5,76 +5,147 @@
     <script type="text/javascript" src="semantic-ui/semantic.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
 
+
     <meta charset="UTF-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="template/css/reset.css"> <!-- CSS reset -->
   	<link rel="stylesheet" href="template/css/style.css"> <!-- Resource style -->
 
-    <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" href="semantic-ui/semantic.min.css">
+    <link rel="stylesheet" href="slick/slick.css">
+    <link rel="stylesheet" href="slick/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <title>Capstone</title>
   </head>
   <body>
-    <div class="dropdown-con">
-      <div class="ui buttons">
-        <button id="titleButton" class="ui button">Search By Title</button>
-        <button id="codeButton" class="ui button">Search By Course Code</button>
+    <div class="header">
+      <div class="header-logo">
+        <img id=headerLogo src="img/logo.png" alt="Logo">
       </div>
     </div>
-    <br>
-    <div class="restrictions">
-      <div class="toggleDateTime">
-        <button type="button" id="timeRes" class="ui button">Add Restriction</button>
-      </div>
-      <br>
-      <div class="dateTimeLimit">
-        <label for="startTime">From</label>
-        <input type="text" id="startTime" size="5" maxlength="4" minlength="4" value="0000">
-        <label for="endTime">To</label>
-        <input type="text" id="endTime" size="5" maxlength="4" minlength="4" value="0000">
-
-        <div class="dayCheckboxes">
-          <input type="checkbox" value="U">
-          <label for="u">Sunday</label>
-          <input type="checkbox" value="M">
-          <label for="m">Monday</label>
-          <input type="checkbox" value="T">
-          <label for="t">Tuesday</label>
-          <input type="checkbox" value="W">
-          <label for="w">Wednesday</label>
-          <input type="checkbox" value="R">
-          <label for="r">Thursday</label>
-          <input type="checkbox" value="F">
-          <label for="f">Friday</label>
-          <input type="checkbox" value="S">
-          <label for="s">Saturday</label>
+    <div class="content">
+      <div class="welcome-box">
+        <div class="welcome-msg">
+          <h1>We Plan</h1>
+          <h1>uChoose</h1>
         </div>
-        <button type="button" id="subTimeLimit" class="ui button">Submit</button>
-      </div>
-      <div class="activeRestrictions">
-        <h2>Time Restrictions</h2>
-      </div>
-    </div>
-    <div class="classes-added">
-        <ul class="classes-added-list"></ul>
-        <span>Credits:</span>
-        <div class="ui input">
-          <input type="text" id="credits" maxlength="2" size="2" name="credits" value="">
+        <div class="start">
+          <button type="button" name="button" class="ui button" id="getStarted">Get Started</button>
         </div>
-        <br>
-        <input type="button" id="generate" name="generate" value="Generate Schedules" class="ui button">
+      </div>
+      <div class="search-box hide">
+        <div class="search-loading">
+          <span>Loading...</span>
+        </div>
+        <div class="search-wrap hide">
+          <h1>Search for courses</h1>
+          <div class="dropdowns">
+          </div>
+          <div class="ui buttons search-buttons">
+            <button id="titleButton" class="ui button">Search By Title</button>
+            <div class="or"></div>
+            <button id="codeButton" class="ui positive button">Search By Course Code</button>
+          </div>
+        </div>
+      </div>
+      <div class="classes-added hide">
+        <div class="classes-added-wrap">
+          <h1>Classes Selected</h1>
+          <ul class="classes-added-list">
+            <li class="classes-list-header">
+              <div class="course-list-element">
+                <span class="title-span">Title </span>
+                <span class="course-span">Course</span>
+                <span class="credits-span">Credits</span>
+                <span class="remove-span"></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="credits-input-wrap">
+          <div class="show-credits-wrap">
+            <button type="button" name="button" class="ui right labeled icon button" id="showCredits">Next<i class="right arrow icon"></i></button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="ui modal restrictions large">
+        <i class="close icon"></i>
+        <div class="header">
+          Time Restrictions
+        </div>
+        <div class="restrictions-wrap">
+          <!-- <button type="button" id="timeRes" class="ui button">Add Restriction</button> -->
+          <div class="dateTimeLimit">
+            <div class="ui input">
+              <input type="text" id="startTime" placeholder="From"size="5" maxlength="4" minlength="4">
+            </div>
+            <div class="ui input">
+              <input type="text" id="endTime" placeholder="To" size="5" maxlength="4" minlength="4">
+            </div>
+
+            <div class="dayCheckboxes">
+              <div class="ui checkbox">
+                <input type="checkbox" id="u" value="U">
+                <label for="u">Sunday</label>
+              </div>
+                <div class="ui checkbox">
+                <input type="checkbox" id="m" value="M">
+                <label for="m">Monday</label>
+              </div>
+                <div class="ui checkbox">
+                <input type="checkbox" id="t" value="T">
+                <label for="t">Tuesday</label>
+              </div>
+                <div class="ui checkbox">
+                <input type="checkbox" id="w" value="W">
+                <label for="w">Wednesday</label>
+              </div>
+                <div class="ui checkbox">
+                <input type="checkbox" id="r" value="R">
+                <label for="r">Thursday</label>
+              </div>
+                <div class="ui checkbox">
+                <input type="checkbox" id="f" value="F">
+                <label for="f">Friday</label>
+              </div>
+                <div class="ui checkbox">
+                <input type="checkbox" id="s" value="S">
+                <label for="s">Saturday</label>
+              </div>
+            </div>
+            <button type="button" id="subTimeLimit" class="ui button">Add Restriction</button>
+          </div>
+          <div class="activeRestrictions">
+          </div>
+        </div>
+        <div class="actions">
+          <div class="ui action input">
+            <input placeholder="Enter credits..." type="text" id="credits" maxlength="2" size="12" name="credits" value="">
+            <button id="generate" name="generate" class="ui button">Generate Schedules</button>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <br>
-    <div class="schedules ui modal longer scrolling fullscreen">
-      <div class="header">Possible Schedules</div>
-      <div class="scrolling content longer">
 
-        <script src="template/js/modernizr.js"></script>
-        <script src="template/js/main.js"></script>
+    <div class="schedules-box hide">
+      <div class="schedules">
+        <div class="schedules-title">
+          <h1>Possible Schedules</h1>
+        </div>
+        <div class="schedules-content">
 
+          <script src="template/js/modernizr.js"></script>
+          <script src="template/js/main.js"></script>
+
+        </div>
       </div>
     </div>
+    <script type="text/javascript" src="js/views.js"></script>
+    <script type="text/javascript" src="slick/slick.min.js"></script>
   </body>
 </html>
