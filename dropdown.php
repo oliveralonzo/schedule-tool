@@ -57,7 +57,7 @@ foreach ($courseTitleArray as $i => $title) {
   echo '<option title="'.$values[0].'" course="'.$values[1].'" credits="'.$values[2].'">'.$values[0].'</option>';
 }
 echo '</select>';
-echo '<input id="submitByTitle" type="button" name="add" value="Add" class="ui button">';
+echo '<input id="submitByTitle" type="button" name="add" value="Add" class="ui button addButton addButton">';
 echo '</div>';
 //echo "</form>";
 ////////////////////////
@@ -75,7 +75,7 @@ echo '</select>';
 echo '<select id="courseNumbers" name="credits" onchange="" class="ui search selection dropdown">';
 echo '</select>';
 
-echo '<input id="submitByCode" type="button" name="add" value="Add" class="ui button">';
+echo '<input id="submitByCode" type="button" name="add" value="Add" class="ui button addButton">';
 echo '</div>';
 
 } //close connectAndPullTitles

@@ -1,13 +1,22 @@
-.body{
+body{
 	margin: 0;
 	padding: 0;
+	color: #5D6468;
+}
+
+* {
+	font-family: 'Roboto', sans-serif !important;
+}
+
+h1 {
+	font-weight: 400 !important;
 }
 
 .header{
 	display: flex;
 	width: 100%;
 	height: 10vh;
-	background-color: black;
+	background-color: #5D6468;
 }
 
 .header-logo{
@@ -15,7 +24,6 @@
 	justify-content: center;
 	width: 5%;
 	height: 100%;
-	background-color: white;
 }
 
 	.header-logo img{
@@ -29,7 +37,7 @@
 	align-items: center;
 	width: 100%;
 	height: 90vh;
-	background-color: gray;
+	background-color: #fff;
 }
 
 .welcome-msg{
@@ -37,8 +45,31 @@
 	text-align: center;
 }
 
-	.welcome-msg h1{
+	.welcome-msg h2, .welcome-msg h3 {
 		margin: 0;
+		padding-bottom: 1rem;
+	}
+
+	.welcome-msg h2{
+		font-weight: 100;
+		font-size: 4rem;
+	}
+
+		.u-choose, .uuml {
+			font-family: 'Quicksand', sans-serif !important;
+		}
+
+		.uuml {
+			color: #FAA21B;
+		}
+
+	.welcome-msg h3{
+		font-weight: 300;
+		font-size: 2rem;
+	}
+
+	.start {
+		text-align: center;
 	}
 
 .search-box, .classes-added{
@@ -64,11 +95,13 @@
 		width: 100%;
 	}
 
-	.dropdowns{
+	.addButton {
+		background-color: #FFA300 !important;
+		color: #fff !important;
 	}
 
 	.search-buttons{
-		padding: 5%;
+		padding: 5% 0;
 	}
 
 	.titleDropdown >*, .codeDropdown >*{
@@ -80,7 +113,8 @@
 	flex-direction: column;
 	justify-content: flex-start;
 	padding-top: 25vh;
-	background-color: white;
+	background-color: #0054A6;
+	color: #fff;
 }
 
 	.classes-added-list, .title, .course-title, .course-list-element, .classes-added-wrap{

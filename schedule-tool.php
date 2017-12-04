@@ -259,8 +259,8 @@ class Schedules {
             } else if ($added === "exceeds") {
               break;
             }
-            // 25 IS SET AS A CONSTANT, MAKE IT A VARIABLE
-            if (count($this->schedules) == 25) {
+            // 15 IS SET AS A CONSTANT, MAKE IT A VARIABLE
+            if (count($this->schedules) == 15) {
               return;
             }
   				}
