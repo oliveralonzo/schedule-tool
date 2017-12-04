@@ -54,6 +54,13 @@ $(document).ready(function(){
             // $(".dateTimeLimit").toggle();
         });
 
+        $(".back-wrap").click(function() {
+          $(".content").toggleClass('hide');
+          $(".schedules-content").slick('unslick');
+          $(".schedules .schedules-content").empty();
+          $(".schedules-box").toggleClass('hide');
+        })
+
         initSemantic();
   }).fail(function(err,status){
     alert("err");

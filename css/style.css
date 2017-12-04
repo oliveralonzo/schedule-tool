@@ -145,6 +145,11 @@
 		color: black !important;
 	}
 
+	.not-scheduled {
+		padding: 4rem;
+		position: relative;
+		top: 2rem;
+	}
 
 
 .restrictions-wrap{
