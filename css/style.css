@@ -4,7 +4,7 @@ body{
 	color: #5D6468;
 }
 
-* {
+*:not(.icon) {
 	font-family: 'Roboto', sans-serif !important;
 }
 
