@@ -128,13 +128,22 @@
 		display: flex;
 		justify-content: center;
 		width: 100%;
-		padding: 1vh 0 1vh 0;
+		padding: 1rem 0;
+	}
+
+	.back-wrap {
+		color: #d3d3d3;
+	}
+
+	.back-wrap:hover {
+		cursor: pointer;
 	}
 
 .schedules{
 	display: flex;
 	align-items: center;
 	flex-direction: column;
+	padding: 1rem;
 }
 
 .schedules-content{
@@ -143,6 +152,12 @@
 
 	.slick-arrow{
 		color: black !important;
+	}
+
+	.not-scheduled {
+		padding: 4rem;
+		position: relative;
+		top: 2rem;
 	}
 
 .dateTimeLimit{
