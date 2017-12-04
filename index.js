@@ -144,7 +144,7 @@ function addRestriction() {
      daysCodes+= $(this).val();
      days += $("label[for='"+$(this).attr("id")+"']").text()+", ";
    });
-   var element = '<li class="restriction" value="'+daysCodes+" "+startTime+"-"+endTime+'"><span>'+days.substring(0, days.length - 2)+' '+startTime+"-"+endTime+' </span><span class="removeRestriction remove">Remove</span></li>';
+   var element = '<li class="restriction" value="'+daysCodes+" "+startTime+"-"+endTime+'"><span>'+days.substring(0, days.length - 2)+' from '+formatTime(startTime)+" to "+formatTime(endTime)+' </span>  <span class="removeRestriction remove">Remove</span></li>';
 
    if ($('.dayCheckboxes input:checked').length > 0 && $(".activeRestrictions").html().indexOf(element)<0){
      $(".activeRestrictions").append(element);
