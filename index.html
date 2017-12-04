@@ -80,44 +80,46 @@
         <div class="restrictions-wrap">
           <!-- <button type="button" id="timeRes" class="ui button">Add Restriction</button> -->
           <div class="dateTimeLimit">
+            <span>From</span>
             <div class="ui input">
-              <input type="text" id="startTime" placeholder="From"size="5" maxlength="4" minlength="4">
+              <input type="text" id="startTime" placeholder="0800"size="5" maxlength="4" minlength="4">
             </div>
+            <span>To</span>
             <div class="ui input">
-              <input type="text" id="endTime" placeholder="To" size="5" maxlength="4" minlength="4">
+              <input type="text" id="endTime" placeholder="2230" size="5" maxlength="4" minlength="4">
             </div>
 
             <div class="dayCheckboxes">
-              <div class="ui checkbox">
+              <div class="ui checkbox days">
                 <input type="checkbox" id="u" value="U">
                 <label for="u">Sunday</label>
               </div>
-                <div class="ui checkbox">
+                <div class="ui checkbox days">
                 <input type="checkbox" id="m" value="M">
                 <label for="m">Monday</label>
               </div>
-                <div class="ui checkbox">
+                <div class="ui checkbox days">
                 <input type="checkbox" id="t" value="T">
                 <label for="t">Tuesday</label>
               </div>
-                <div class="ui checkbox">
+                <div class="ui checkbox days">
                 <input type="checkbox" id="w" value="W">
                 <label for="w">Wednesday</label>
               </div>
-                <div class="ui checkbox">
+                <div class="ui checkbox days">
                 <input type="checkbox" id="r" value="R">
                 <label for="r">Thursday</label>
               </div>
-                <div class="ui checkbox">
+                <div class="ui checkbox days">
                 <input type="checkbox" id="f" value="F">
                 <label for="f">Friday</label>
               </div>
-                <div class="ui checkbox">
+                <div class="ui checkbox days">
                 <input type="checkbox" id="s" value="S">
                 <label for="s">Saturday</label>
               </div>
             </div>
-            <button type="button" id="subTimeLimit" class="ui button">Add Restriction</button>
+            <button type="button" id="subTimeLimit" class="ui icon button"><i class="plus icon"></i></button>
           </div>
           <div class="activeRestrictions">
           </div>

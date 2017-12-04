@@ -160,10 +160,29 @@
 		top: 2rem;
 	}
 
+.dateTimeLimit{
+	padding: 0.5rem;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	margin: 0;
+	border-bottom: 1px solid rgba(34,36,38,.15);
+}
+	.dateTimeLimit span{
+		font-size: 1.5em;
+	}
+	.days{
+		padding-left: 1vh;
+	}
 
 .restrictions-wrap{
 	min-height: 25vh;
 }
+	.restriction{
+		padding-top: 0.5rem;
+		padding-left: 1rem;
+		list-style: none;
+	}
 
 .dayCheckboxes{
 	display: inline-block;
