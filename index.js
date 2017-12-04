@@ -9,12 +9,14 @@ $(document).ready(function(){
     var getting = $.get("dropdown.php");
     getting.done(function(data) {
 
-        $(".dropdown-con").prepend(data);
+        $(".dropdowns").html(data);
+        $(".search-wrap").toggleClass('hide');
+        $(".search-loading").toggleClass('hide');
         $(".codeDropdown").hide();
 
-        $("#timeRes").click(function() {
-          $(".dateTimeLimit").toggle();
-        });
+        // $("#timeRes").click(function() {
+        //   $(".dateTimeLimit").toggle();
+        // });
 
         $("#submitByTitle").click(function(){
             addClassToCart($("#titles").find("option:selected"));
@@ -31,9 +33,9 @@ $(document).ready(function(){
         });
 
         $(".classes-added-list").on("click", ".removeCourse", function() {
-            $(this).parent().remove();
+            $(this).parent().parent().remove();
             if (!$(".title").length) {
-              $(".classes-added h1").remove();
+              $(".classes-added").toggleClass('hide');
             }
         });
 
@@ -43,13 +45,15 @@ $(document).ready(function(){
 
         $("#generate").click(function() {
             generateSchedules();
+            $('.restrictions').modal('hide');
         });
 
         $("#subTimeLimit").click(function() {
             addRestriction();
             clearRestrictionsForm();
-            $(".dateTimeLimit").toggle();
+            // $(".dateTimeLimit").toggle();
         });
+
         initSemantic();
   }).fail(function(err,status){
     alert("err");
@@ -77,8 +81,8 @@ function toggle($toShow, $toHide) {
 function addClassToCart($course) {
     var title = $course.attr("title");
     if (title && $(".classes-added-list").text().indexOf(title)<0) {
-      if (!$(".title").length) {
-          $(".classes-added").prepend("<h1> Classes Selected </h1>");
+      if ($(".title").length == 0) {
+        $('.classes-added').toggleClass('hide');
       }
 
       var course = $course.attr("course");
@@ -90,9 +94,9 @@ function addClassToCart($course) {
       }
 
       $(".classes-added-list").append(
-          '<li class="title"> <span value="'+title+'" credits="'+credits+'"class="courseTitle">'+
-          title+" - "+course+" - "+credits+variCredits+
-          '</span> <span class="removeCourse remove">Remove</span> </li>');
+          '<li class="title"> <div value="'+title+'" credits="'+credits+'"class="course-title course-list-element"><span class="title-span">'+
+          title+'</span><span class="course-span">'+course+'</span><span class="credits-span">'+credits+variCredits+
+          '</span><span class="removeCourse remove remove-span">Remove</span></div>  </li>');
 
       $('input[name="credits"]').change(function () {
         var credits = $(this).val();
@@ -105,23 +109,23 @@ function addClassToCart($course) {
 }
 
 function generateSchedules() {
-    $(".schedules .content").empty();
+    $(".schedules .schedules-content").empty();
     $(".schedules").prepend('');
     var titles = [];
-    $('.courseTitle').each(function() {
+    $('.course-title').each(function() {
         titles.push($(this).attr("value"));
     });
 
     var blocks = [];
     $('.restriction').each(function() {
-      blocks.push($(this).text());
+      blocks.push($(this).attr("value"));
     });
 
     var credits = $("#credits").val();
     var posting = $.post("courseDB.php", { titles: titles.join(" && "), credits: credits, blocks: blocks.join(" && ") });
     posting.done(function(data){
         // Output for testing
-        // $(".schedules .content").html(data);
+        // $(".schedules .schedules-content").html(data);
         // $(".schedules").modal('refresh');
         // $(".schedules").modal('show');
 
@@ -134,13 +138,13 @@ function addRestriction() {
   // format is MWTR 0000-000
   var startTime = $("#startTime").val();
   var endTime = $("#endTime").val();
+  var daysCodes = "";
   var days = "";
    $('.dayCheckboxes input:checked').each(function(){
-     days+= $(this).val();
+     daysCodes+= $(this).val();
+     days += $("label[for='"+$(this).attr("id")+"']").text()+", ";
    });
-   var element = '<li value="test"><span class="restriction">'+days+" "+
-   startTime+"-"+endTime+
-   ' </span><span class="removeRestriction remove">Remove</span></li>';
+   var element = '<li class="restriction" value="'+daysCodes+" "+startTime+"-"+endTime+'"><span>'+days.substring(0, days.length - 2)+' '+startTime+"-"+endTime+' </span><span class="removeRestriction remove">Remove</span></li>';
 
    if ($('.dayCheckboxes input:checked').length > 0 && $(".activeRestrictions").html().indexOf(element)<0){
      $(".activeRestrictions").append(element);
@@ -179,28 +183,32 @@ function processSchedules(data){
   var schedules = data.split("\n\n");
   schedules.forEach(function(schedule){
     $.get("template/index.html",function(data){
-      $(".schedules .content").append(data);
+      $(".schedules .schedules-content").append(data);
       var courses = schedule.split("\n");
       var eventCount = 1;
       courses.forEach(function(course) {
-        var info = course.split(", ");
-        var title = info[3];
-        var times = info[4].split(" && ");
-        times.forEach(function(time) {
-          var days = time.split(" ")[0];
-          var hours = time.split(" ")[1].split("-");
-          for (var i=0; i<days.length; i++) {
-            $(".schedules .content .cd-schedule:last-child #" + days[i]).append(
-              createEvent(formatTime(hours[0]), formatTime(hours[1]), title, eventCount));
-          }
-        });
+        if (course){
+          var info = course.split(", ");
+          var title = info[3];
+          var times = info[4].split(" && ");
+          times.forEach(function(time) {
+            var days = time.split(" ")[0];
+            var hours = time.split(" ")[1].split("-");
+            for (var i=0; i<days.length; i++) {
+              $(".schedules .schedules-content .cd-schedule:last-child #" + days[i]).append(
+                createEvent(formatTime(hours[0]), formatTime(hours[1]), title, eventCount));
+            }
+          });
+        }
+
         eventCount++;
       })
     });
   });
   $.cachedScript("template/js/main.js").done(function () {
-    $(".schedules").modal('refresh');
-    $(".schedules").modal('show');
+    $(".content").toggleClass('hide');
+    $(".schedules-content").slick();
+    $(".schedules-box").toggleClass('hide');
   });
   // $(".schedules").modal('refresh');
 }

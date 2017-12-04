@@ -1,7 +1,170 @@
+.body{
+	margin: 0;
+	padding: 0;
+}
+
+.header{
+	display: flex;
+	width: 100%;
+	height: 10vh;
+	background-color: black;
+}
+
+.header-logo{
+	display: flex;
+	justify-content: center;
+	width: 5%;
+	height: 100%;
+	background-color: white;
+}
+
+	.header-logo img{
+		height: 100%;
+		width: auto;
+	}
+
+.content{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 90vh;
+	background-color: gray;
+}
+
+.welcome-msg{
+	padding: 0.5rem !important;
+	text-align: center;
+}
+
+	.welcome-msg h1{
+		margin: 0;
+	}
+
+.search-box, .classes-added{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	width: 50%;
+}
+
+	.search-loading{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.search-wrap{
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+	}
+
+	.dropdowns{
+	}
+
+	.search-buttons{
+		padding: 5%;
+	}
+
+	.titleDropdown >*, .codeDropdown >*{
+		margin-right: 0.5rem !important;
+	}
+
+.classes-added{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	padding-top: 25vh;
+	background-color: white;
+}
+
+	.classes-added-list, .title, .course-title, .course-list-element, .classes-added-wrap{
+		width: 100%;
+	}
+
+		.classes-added-wrap{
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+			height: 40vh;
+		}
+
+		.classes-list-header{
+			font-weight: bold;
+		}
+
+		.title-span, .course-span, .credits-span, .remove-span{
+			display: inline-block;
+		}
+
+		.course-list-element{
+			display: flex;
+			justify-content: center;
+		}
+
+		.title-span{
+			width: 40%;
+		}
+
+		.course-span{
+			width: 15%;
+		}
+
+		.credits-span{
+			width: 10%;
+		}
+
+		.remove-span{
+			width: 6rem;
+		}
+
+	.schedules-title{
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		padding: 1vh 0 1vh 0;
+	}
+
+.schedules{
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+.schedules-content{
+	width: 70%;
+}
+
+	.slick-arrow{
+		color: black !important;
+	}
+
+
+
+.restrictions-wrap{
+	min-height: 25vh;
+}
+
+.dayCheckboxes{
+	display: inline-block;
+	width: auto;
+}
+
+.schedules-box{
+	width: 100%;
+}
+
+
 .remove {
 	text-decoration: underline;
 }
-/*Auto-hide the restrictions div on page load*/
-.dateTimeLimit{
-   display: none;
+
+.hide{
+	display: none;
 }
