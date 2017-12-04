@@ -141,6 +141,88 @@ function generateSchedules() {
     });
 }
 
+function initSemantic() {
+  $("#titles").dropdown();
+  $("#codes").dropdown();
+  $("#courseNumbers").dropdown();
+}
+
+function processSchedules(data){
+  var schedules = data.split("\n\n");
+  schedules.forEach(function(schedule){
+    $.get("template/index.html",function(data){
+      $(".schedules .schedules-content").append(data);
+      var courses = schedule.split("\n");
+      var eventCount = 1;
+      courses.forEach(function(course) {
+        if (course){
+          var info = course.split(", ");
+          var crn = info[0];
+          var courseCode = info[1];
+          var times = info[4].split(" && ");
+          times.forEach(function(time) {
+            var $current = $(".schedules .schedules-content .cd-schedule:last-child");
+            if (time.trim() !== "-") {
+              var days = time.split(" ")[0];
+              var hours = time.split(" ")[1].split("-");
+              for (var i=0; i<days.length; i++) {
+                $current.find("#" + days[i]).append(
+                  createEvent(formatTime(hours[0]), formatTime(hours[1]), courseCode + " - " + crn, eventCount));
+              }
+            } else {
+              $current.find(".not-scheduled").removeClass('hide');
+              $current.find(".not-scheduled ul").append(
+                '<li>' + courseCode + " - " + crn + '</li>'
+              );
+            }
+          });
+        }
+
+        eventCount++;
+      })
+    });
+  });
+  $.cachedScript("template/js/main.js").done(function () {
+    $(".content").toggleClass('hide');
+    $(".schedules-content").slick({
+      dots: true,
+      adaptiveHeight: true
+    });
+    $(".schedules-box").toggleClass('hide');
+  });
+  // $(".schedules").modal('refresh');
+}
+
+function createEvent(startTime, endTime, title, eventCount) {
+  return `<li class="single-event" data-start="${startTime}" data-end="${endTime}" data-content="event-abs-circuit" data-event="event-${eventCount}">
+    <a href="#0">
+      <em class="event-name">${title}</em>
+    </a>
+  </li>`
+}
+
+function formatTime(time){
+  if (time) {
+    return time.substring(0, 2)+":"+time.substring(2);
+  } else {
+    return false;
+  }
+}
+
+jQuery.cachedScript = function( url, options ) {
+  // Allow user to set any option except for dataType, cache, and url
+  options = $.extend( options || {}, {
+    dataType: "script",
+    cache: true,
+    url: url
+  });
+
+  // Use $.ajax() since it is more flexible than $.getScript
+  // Return the jqXHR object so we can chain callbacks
+  return jQuery.ajax( options );
+};
+
+
 function addRestriction() {
   // format is MWTR 0000-000
   var startTime = $("#startTime").val();
@@ -163,72 +245,3 @@ function clearRestrictionsForm(){
   $("#startTime").val("");
   $("#endTime").val("");
 }
-
-function initSemantic() {
-  $("#titles").dropdown();
-  $("#codes").dropdown();
-  $("#courseNumbers").dropdown();
-}
-
-function refreshSemantic() {
-  $("#titles").dropdown('refresh');
-}
-
-function createEvent(startTime, endTime, title, eventCount) {
-  return `<li class="single-event" data-start="${startTime}" data-end="${endTime}" data-content="event-abs-circuit" data-event="event-${eventCount}">
-    <a href="#0">
-      <em class="event-name">${title}</em>
-    </a>
-  </li>`
-}
-
-function formatTime(time){
-  return time.substring(0, 2)+":"+time.substring(2);
-}
-
-function processSchedules(data){
-  var schedules = data.split("\n\n");
-  schedules.forEach(function(schedule){
-    $.get("template/index.html",function(data){
-      $(".schedules .schedules-content").append(data);
-      var courses = schedule.split("\n");
-      var eventCount = 1;
-      courses.forEach(function(course) {
-        if (course){
-          var info = course.split(", ");
-          var title = info[3];
-          var times = info[4].split(" && ");
-          times.forEach(function(time) {
-            var days = time.split(" ")[0];
-            var hours = time.split(" ")[1].split("-");
-            for (var i=0; i<days.length; i++) {
-              $(".schedules .schedules-content .cd-schedule:last-child #" + days[i]).append(
-                createEvent(formatTime(hours[0]), formatTime(hours[1]), title, eventCount));
-            }
-          });
-        }
-
-        eventCount++;
-      })
-    });
-  });
-  $.cachedScript("template/js/main.js").done(function () {
-    $(".content").toggleClass('hide');
-    $(".schedules-content").slick();
-    $(".schedules-box").toggleClass('hide');
-  });
-  // $(".schedules").modal('refresh');
-}
-
-jQuery.cachedScript = function( url, options ) {
-  // Allow user to set any option except for dataType, cache, and url
-  options = $.extend( options || {}, {
-    dataType: "script",
-    cache: true,
-    url: url
-  });
-
-  // Use $.ajax() since it is more flexible than $.getScript
-  // Return the jqXHR object so we can chain callbacks
-  return jQuery.ajax( options );
-};
