@@ -210,6 +210,11 @@ h1 {
 		padding-left: 1vh;
 	}
 
+.restrictions .actions {
+	background-color: #5D6468 !important;
+	color: #fff;
+}
+
 .restrictions-wrap{
 	min-height: 25vh;
 }
@@ -217,6 +222,15 @@ h1 {
 		padding-top: 0.5rem;
 		padding-left: 1rem;
 		list-style: none;
+	}
+
+	#generate {
+		background-color: #0054A6 !important;
+		color: #fff !important;
+	}
+
+	#generate:hover {
+		background-color: #002E6D !important;
 	}
 
 .dayCheckboxes{
