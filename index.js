@@ -54,12 +54,16 @@ $(document).ready(function(){
             // $(".dateTimeLimit").toggle();
         });
 
-        $(".back-wrap").click(function() {
+        $(".back-schedules").click(function() {
           $(".content").toggleClass('hide');
           $(".schedules-content").slick('unslick');
           $(".schedules .schedules-content").empty();
           $(".schedules-box").toggleClass('hide');
         })
+
+        $(".back-no-schedules").click(function() {
+          $('.no-schedules').addClass('hide');
+        });
 
         initSemantic();
   }).fail(function(err,status){
@@ -116,6 +120,9 @@ function addClassToCart($course) {
 }
 
 function generateSchedules() {
+    // loading box being hidden again from main.js 340. Make that a promise later on
+    $(".loading-box").toggleClass('hide');
+    $('.restrictions').modal('hide');
     $(".schedules .schedules-content").empty();
     $(".schedules").prepend('');
     var titles = [];
@@ -137,7 +144,12 @@ function generateSchedules() {
         // $(".schedules").modal('show');
 
         //Output for production
-        processSchedules(data);
+        if (data) {
+          processSchedules(data);
+        } else {
+          $('.loading-box').addClass('hide');
+          $('.no-schedules').removeClass('hide');
+        }
     });
 }
 

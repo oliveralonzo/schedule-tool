@@ -3,6 +3,8 @@
   <head>
     <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="semantic-ui/semantic.min.js"></script>
+    <script src="template/js/modernizr.js"></script>
+    <script src="template/js/main.js"></script>
     <script type="text/javascript" src="index.js"></script>
 
 
@@ -139,18 +141,38 @@
 
     </div>
 
+    <div class="loading-box hide">
+      <div class="loading-wrapper">
+        <div class="sk-folding-cube">
+           <div class="sk-cube1 sk-cube"></div>
+           <div class="sk-cube2 sk-cube"></div>
+           <div class="sk-cube4 sk-cube"></div>
+           <div class="sk-cube3 sk-cube"></div>
+         </div>
+        <h2> Please wait while we do our magic
+          <span class="uuml"> &uuml; </span>
+         </h2>
+      </div>
+    </div>
+    <div class="no-schedules hide">
+      <div class="sad-face">
+        <img src="img/sad.png" alt="Sad Face">
+      </div>
+      <h2> There are no possible schedules with those requirements </h2>
+      <div class="back-no-schedules">
+        <span><i class="left arrow icon"></i> Back to Search</span>
+      </div>
+    </div>
+    </div>
     <div class="schedules-box hide">
       <div class="schedules">
-        <div class="back-wrap">
+        <div class="back-schedules">
           <span><i class="left arrow icon"></i> Back to Search</span>
         </div>
         <div class="schedules-title">
           <h1>Possible Schedules</h1>
         </div>
         <div class="schedules-content">
-
-          <script src="template/js/modernizr.js"></script>
-          <script src="template/js/main.js"></script>
 
         </div>
       </div>
