@@ -58,7 +58,16 @@ $(document).ready(function(){
           $(".schedules-content").slick('unslick');
           $(".schedules .schedules-content").empty();
           $(".schedules-box").toggleClass('hide');
-        })
+        });
+
+        $('#getStarted').click(function(){
+          $('.welcome-box').remove();
+          $('.search-box').toggleClass('hide');
+        });
+
+        $('#showCredits').click(function(){
+          $('.restrictions').modal('show');
+        });
 
         $(".back-no-schedules").click(function() {
           $('.no-schedules').addClass('hide');
