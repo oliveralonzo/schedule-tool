@@ -7,7 +7,7 @@ $(document).ready(function(){
         toggle($(".codeDropdown"), $(".titleDropdown"));
     });
 
-    var getting = $.get("dropdown.php");
+    var getting = $.get("php/dropdown.php");
     getting.done(function(data) {
         $(".dropdowns").html(data);
         $(".search-wrap").toggleClass('hide');
@@ -79,7 +79,7 @@ $(document).ready(function(){
 // Function that gets course numbers for selected course code
 function getNumbers(subject_code) {
   $("#courseNumbers").empty();
-  var getNums = $.post("courseNumbers.php",{
+  var getNums = $.post("php/courseNumbers.php",{
     subject_code: subject_code
   })
   getNums.done(function(data){
@@ -151,7 +151,7 @@ function generateSchedules() {
     });
 
     var credits = $("#credits").val();
-    var posting = $.post("courseDB.php", { titles: titles.join(" && "), credits: credits, blocks: blocks.join(" && ") });
+    var posting = $.post("php/courseDB.php", { titles: titles.join(" && "), credits: credits, blocks: blocks.join(" && ") });
     posting.done(function(data){
         // Output for testing
         // $(".schedules .schedules-content").html(data);
