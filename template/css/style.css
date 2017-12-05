@@ -1,4 +1,4 @@
-/* -------------------------------- 
+/* --------------------------------
 
 Primary style
 
@@ -23,9 +23,9 @@ a {
   text-decoration: none;
 }
 
-/* -------------------------------- 
+/* --------------------------------
 
-Main Components 
+Main Components
 
 -------------------------------- */
 .cd-schedule {
@@ -299,39 +299,54 @@ Main Components
 .cd-schedule .single-event[data-event="event-1"],
 .cd-schedule [data-event="event-1"] .header-bg {
   /* this is used to set a background color for the event and the modal window */
-  background: #577F92;
-}
-
-.cd-schedule .single-event[data-event="event-1"]:hover {
-  background: #618da1;
+  background: #0054A6;
 }
 
 .cd-schedule .single-event[data-event="event-2"],
 .cd-schedule [data-event="event-2"] .header-bg {
-  background: #443453;
-}
-
-.cd-schedule .single-event[data-event="event-2"]:hover {
-  background: #513e63;
+  background: #FFA300;
 }
 
 .cd-schedule .single-event[data-event="event-3"],
 .cd-schedule [data-event="event-3"] .header-bg {
-  background: #A2B9B2;
-}
-
-.cd-schedule .single-event[data-event="event-3"]:hover {
-  background: #b1c4be;
+  background: #95D2F3;
 }
 
 .cd-schedule .single-event[data-event="event-4"],
 .cd-schedule [data-event="event-4"] .header-bg {
-  background: #f6b067;
+  background: #5D6468;
 }
 
-.cd-schedule .single-event[data-event="event-4"]:hover {
-  background: #f7bd7f;
+.cd-schedule .single-event[data-event="event-5"],
+.cd-schedule [data-event="event-5"] .header-bg {
+  background: #019CDB;
 }
+
+.cd-schedule .single-event[data-event="event-6"],
+.cd-schedule [data-event="event-6"] .header-bg {
+  background: #002E6D;
+}
+
+.cd-schedule .single-event[data-event="event-7"],
+.cd-schedule [data-event="event-7"] .header-bg {
+  background: #FFCC4F;
+}
+
+.cd-schedule .single-event[data-event="event-8"],
+.cd-schedule [data-event="event-8"] .header-bg {
+  background: #73B865;
+}
+
+.cd-schedule .single-event[data-event="event-9"],
+.cd-schedule [data-event="event-9"] .header-bg {
+  background: #F3EAC2;
+}
+
+.cd-schedule .single-event[data-event="event-10"],
+.cd-schedule [data-event="event-10"] .header-bg {
+  background: #907257;
+}
+
 
 .cd-schedule .event-modal {
   position: fixed;

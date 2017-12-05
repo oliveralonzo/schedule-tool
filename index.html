@@ -3,12 +3,15 @@
   <head>
     <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="semantic-ui/semantic.min.js"></script>
+    <script src="template/js/modernizr.js"></script>
+    <script src="template/js/main.js"></script>
     <script type="text/javascript" src="index.js"></script>
 
 
     <meta charset="UTF-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300|Roboto:100,300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="template/css/reset.css"> <!-- CSS reset -->
   	<link rel="stylesheet" href="template/css/style.css"> <!-- Resource style -->
 
@@ -21,15 +24,19 @@
   </head>
   <body>
     <div class="header">
-      <div class="header-logo">
-        <img id=headerLogo src="img/logo.png" alt="Logo">
-      </div>
+      <a class="header-logo" href="/index.html">
+        <img id="headerLogo" src="img/u-logo.png" alt="Logo">
+      </a>
     </div>
     <div class="content">
       <div class="welcome-box">
         <div class="welcome-msg">
-          <h1>We Plan</h1>
-          <h1>uChoose</h1>
+          <h2>We plan,
+            <span class="u-choose">
+              <span class="uuml">&uuml;</span>Choose
+            </span>
+          </h2>
+          <h3> Course selection made easy at Creighton </h3>
         </div>
         <div class="start">
           <button type="button" name="button" class="ui button" id="getStarted">Get Started</button>
@@ -46,7 +53,7 @@
           <div class="ui buttons search-buttons">
             <button id="titleButton" class="ui button">Search By Title</button>
             <div class="or"></div>
-            <button id="codeButton" class="ui positive button">Search By Course Code</button>
+            <button id="codeButton" class="ui button">Search By Course Code</button>
           </div>
         </div>
       </div>
@@ -134,18 +141,38 @@
 
     </div>
 
+    <div class="loading-box hide">
+      <div class="loading-wrapper">
+        <div class="sk-folding-cube">
+           <div class="sk-cube1 sk-cube"></div>
+           <div class="sk-cube2 sk-cube"></div>
+           <div class="sk-cube4 sk-cube"></div>
+           <div class="sk-cube3 sk-cube"></div>
+         </div>
+        <h2> Please wait while we do our magic
+          <span class="uuml"> &uuml; </span>
+         </h2>
+      </div>
+    </div>
+    <div class="no-schedules hide">
+      <div class="sad-face">
+        <img src="img/sad.png" alt="Sad Face">
+      </div>
+      <h2> There are no possible schedules with those requirements </h2>
+      <div class="back-no-schedules">
+        <span><i class="left arrow icon"></i> Back to Search</span>
+      </div>
+    </div>
+    </div>
     <div class="schedules-box hide">
       <div class="schedules">
-        <div class="back-wrap">
+        <div class="back-schedules">
           <span><i class="left arrow icon"></i> Back to Search</span>
         </div>
         <div class="schedules-title">
           <h1>Possible Schedules</h1>
         </div>
         <div class="schedules-content">
-
-          <script src="template/js/modernizr.js"></script>
-          <script src="template/js/main.js"></script>
 
         </div>
       </div>
