@@ -182,9 +182,9 @@ class Course {
     private function checkTimeConflict($this_hours, $other_hours) {
         $time = explode("-", $this_hours);
         $otherTime = explode("-", $other_hours);
-        if (strcmp($time[0],$otherTime[0]) >= 0 and strcmp($time[0],$otherTime[1]) <= 0){
+        if (strcmp($time[0],$otherTime[0]) >= 0 and strcmp($time[0],$otherTime[1]) < 0){
             return true;
-        } else if (strcmp($otherTime[0],$time[0]) >= 0 and strcmp($otherTime[0],$time[1]) <= 0) {
+        } else if (strcmp($otherTime[0],$time[0]) >= 0 and strcmp($otherTime[0],$time[1]) < 0) {
             return true;
         }
         return false;
