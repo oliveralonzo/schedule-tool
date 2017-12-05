@@ -1,12 +1,21 @@
 <?php
+/**
+* File that takes in all the course sections and builds an array
+* 	indexing them by title
+* @author Josh Nichols & Oliver Alonzo
+* @version 1.0
+*/
 error_reporting(0); // stops annoying notice
 
 include 'schedule-tool.php';
 
 $coursesByTitle = [];
 
-// Uncomment the following line for testing
-//$sections = file('options.txt');
+/**
+* Goes through all of $sections.
+*		the $sections variable is coming from courseDB.php, where index.php is called
+*		for scope 
+*/
 foreach ($sections as $line) {
 	list($crn, $course, $instructor, $title, $times, $credits) = explode(',', $line);
 	if (!array_key_exists($title, $coursesByTitle)) {
