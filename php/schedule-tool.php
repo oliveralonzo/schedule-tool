@@ -38,8 +38,7 @@ class Course {
         if (!empty($times)) {
           $timesArray = explode(" && ", $times);
           foreach ($timesArray as $times) {
-              $days_hours = explode(" ", trim($times));
-              $this->times[$days_hours[0]] = $days_hours[1];
+              $this->addTimes($times);
           }
         }
     }
@@ -58,10 +57,12 @@ class Course {
         $times = "";
         $last_days = end(array_keys($this->getTimes()));
         foreach ($this->times as $days=>$hours) {
-            $times .= $days . " " . $hours;
-            if (strcmp($last_days, $days) != 0) {
+          foreach($hours as $i=>$hour) {
+            $times .= $days . " " . $hour;
+            if (strcmp($last_days, $days) != 0 or $i != count($hours)-1) {
               $times .= " && ";
             }
+          }
         }
         return $times;
     }
@@ -102,11 +103,14 @@ class Course {
     }
 
     /**
-    * Accessor method for course title
+    * Method that adds a new meeting ime to a course
     */
     public function addTimes($times) {
         $days_hours = explode(" ", trim($times));
-        $this->times[$days_hours[0]] = $days_hours[1];
+        if (!isset($this->times[$days_hours[0]])) {
+          $this->times[$days_hours[0]] = [];
+        }
+        array_push($this->times[$days_hours[0]], $days_hours[1]);
     }
 
     /**
@@ -137,11 +141,15 @@ class Course {
     */
     public function checkConflicts($other) {
         foreach ($this->getTimes() as $this_days=>$this_hours) {
+          foreach ($this_hours as $this_current_hours) {
             foreach ($other->getTimes() as $other_days=>$other_hours) {
-                if ($this->checkDayConflict(trim($this_days), trim($other_days)) == true and $this->checkTimeConflict(trim($this_hours), trim($other_hours)) == true) {
+              foreach ($other_hours as $other_current_hours) {
+                if ($this->checkDayConflict(trim($this_days), trim($other_days)) == true and $this->checkTimeConflict(trim($this_current_hours), trim($other_current_hours)) == true) {
                     return true;
                 }
+              }
             }
+          }
         }
         return false;
     }
@@ -174,9 +182,9 @@ class Course {
     private function checkTimeConflict($this_hours, $other_hours) {
         $time = explode("-", $this_hours);
         $otherTime = explode("-", $other_hours);
-        if (strcmp($time[0],$otherTime[0]) >= 0 and strcmp($time[0],$otherTime[1]) <= 0){
+        if (strcmp($time[0],$otherTime[0]) >= 0 and strcmp($time[0],$otherTime[1]) < 0){
             return true;
-        } else if (strcmp($otherTime[0],$time[0]) >= 0 and strcmp($otherTime[0],$time[1]) <= 0) {
+        } else if (strcmp($otherTime[0],$time[0]) >= 0 and strcmp($otherTime[0],$time[1]) < 0) {
             return true;
         }
         return false;
@@ -226,7 +234,6 @@ class Schedule {
           $dummy->addTimes($block);
         }
         $this->addCourse($dummy);
-        //echo $dummy;
     }
   }
 
