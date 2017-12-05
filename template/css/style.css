@@ -347,6 +347,57 @@ Main Components
   background: #907257;
 }
 
+.cd-schedule .single-event[data-event="event-11"],
+.cd-schedule [data-event="event-11"] .header-bg {
+  /* this is used to set a background color for the event and the modal window */
+  background: #0054A6;
+}
+
+.cd-schedule .single-event[data-event="event-12"],
+.cd-schedule [data-event="event-12"] .header-bg {
+  background: #FFA300;
+}
+
+.cd-schedule .single-event[data-event="event-13"],
+.cd-schedule [data-event="event-13"] .header-bg {
+  background: #95D2F3;
+}
+
+.cd-schedule .single-event[data-event="event-14"],
+.cd-schedule [data-event="event-14"] .header-bg {
+  background: #5D6468;
+}
+
+.cd-schedule .single-event[data-event="event-15"],
+.cd-schedule [data-event="event-15"] .header-bg {
+  background: #019CDB;
+}
+
+.cd-schedule .single-event[data-event="event-16"],
+.cd-schedule [data-event="event-16"] .header-bg {
+  background: #002E6D;
+}
+
+.cd-schedule .single-event[data-event="event-17"],
+.cd-schedule [data-event="event-17"] .header-bg {
+  background: #FFCC4F;
+}
+
+.cd-schedule .single-event[data-event="event-18"],
+.cd-schedule [data-event="event-18"] .header-bg {
+  background: #73B865;
+}
+
+.cd-schedule .single-event[data-event="event-19"],
+.cd-schedule [data-event="event-19"] .header-bg {
+  background: #F3EAC2;
+}
+
+.cd-schedule .single-event[data-event="event-20"],
+.cd-schedule [data-event="event-20"] .header-bg {
+  background: #907257;
+}
+
 
 .cd-schedule .event-modal {
   position: fixed;

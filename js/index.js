@@ -1,3 +1,4 @@
+// All jquery functions are attached during $(document).ready();
 $(document).ready(function(){
     $("#titleButton").click(function(){
         toggle($(".titleDropdown"), $(".codeDropdown"));
@@ -8,15 +9,10 @@ $(document).ready(function(){
 
     var getting = $.get("dropdown.php");
     getting.done(function(data) {
-
         $(".dropdowns").html(data);
         $(".search-wrap").toggleClass('hide');
         $(".search-loading").toggleClass('hide');
         $(".codeDropdown").hide();
-
-        // $("#timeRes").click(function() {
-        //   $(".dateTimeLimit").toggle();
-        // });
 
         $("#submitByTitle").click(function(){
             addClassToCart($("#titles").find("option:selected"));
@@ -58,7 +54,16 @@ $(document).ready(function(){
           $(".schedules-content").slick('unslick');
           $(".schedules .schedules-content").empty();
           $(".schedules-box").toggleClass('hide');
-        })
+        });
+
+        $('#getStarted').click(function(){
+          $('.welcome-box').remove();
+          $('.search-box').toggleClass('hide');
+        });
+
+        $('#showCredits').click(function(){
+          $('.restrictions').modal('show');
+        });
 
         $(".back-no-schedules").click(function() {
           $('.no-schedules').addClass('hide');
@@ -71,6 +76,7 @@ $(document).ready(function(){
 
 });
 
+// Function that gets course numbers for selected course code
 function getNumbers(subject_code) {
   $("#courseNumbers").empty();
   var getNums = $.post("courseNumbers.php",{
@@ -80,14 +86,22 @@ function getNumbers(subject_code) {
     var $courseNumbers = $("#courseNumbers");
     $courseNumbers.append(data);
   })
-
 }
 
+// Function that adds functionality from Semantic UI to dropdowns
+function initSemantic() {
+  $("#titles").dropdown();
+  $("#codes").dropdown();
+  $("#courseNumbers").dropdown();
+}
+
+// Function that shows and element and hides another
 function toggle($toShow, $toHide) {
     $toShow.show();
     $toHide.hide();
 }
 
+// Function that adds a class to the classes selected section
 function addClassToCart($course) {
     var title = $course.attr("title");
     if (title && $(".classes-added-list").text().indexOf(title)<0) {
@@ -118,6 +132,8 @@ function addClassToCart($course) {
 
 }
 
+// Function that starts the process for generating schedules, calling the php File
+// once that's done, it calls processSchedules with the returned data
 function generateSchedules() {
     // loading box being hidden again from main.js 340. Make that a promise later on
     $(".loading-box").toggleClass('hide');
@@ -152,12 +168,7 @@ function generateSchedules() {
     });
 }
 
-function initSemantic() {
-  $("#titles").dropdown();
-  $("#codes").dropdown();
-  $("#courseNumbers").dropdown();
-}
-
+// Function that creates the template for all the schedules generated
 function processSchedules(data){
   var schedules = data.split("\n\n");
   var c = 0;
@@ -200,6 +211,7 @@ function processSchedules(data){
   });
 }
 
+// Function that displays the templated schedules
 function displaySchedules() {
   $(".schedules-box").toggleClass('hide');
   $(".content").toggleClass('hide');
@@ -210,6 +222,7 @@ function displaySchedules() {
   createTemplate();
 }
 
+// Function that returns a li element for event
 function createEvent(startTime, endTime, title, eventCount) {
   return `<li class="single-event" data-start="${startTime}" data-end="${endTime}" data-content="event-abs-circuit" data-event="event-${eventCount}">
     <a href="#0">
@@ -218,6 +231,7 @@ function createEvent(startTime, endTime, title, eventCount) {
   </li>`
 }
 
+// Function that returns a li element for event
 function formatTime(time){
   if (time) {
     return time.substring(0, 2)+":"+time.substring(2);
@@ -226,21 +240,7 @@ function formatTime(time){
   }
 }
 
-jQuery.cachedScript = function( url, options ) {
-  // Allow user to set any option except for dataType, cache, and url
-  options = $.extend( options || {}, {
-    dataType: "script",
-    cache: true,
-    async: false,
-    url: url
-  });
-
-  // Use $.ajax() since it is more flexible than $.getScript
-  // Return the jqXHR object so we can chain callbacks
-  return jQuery.ajax( options );
-};
-
-
+// Function that adds a restriction to the restrictions modal
 function addRestriction() {
   // format is MWTR 0000-000
   var startTime = $("#startTime").val();
@@ -258,6 +258,7 @@ function addRestriction() {
    }
 }
 
+// Function that clears the restrictions form in the modal
 function clearRestrictionsForm(){
   $(".dayCheckboxes input").prop("checked", false);
   $("#startTime").val("");
