@@ -45,7 +45,6 @@ $(document).ready(function(){
 
         $("#generate").click(function() {
             generateSchedules();
-            $('.restrictions').modal('hide');
         });
 
         $("#subTimeLimit").click(function() {
@@ -161,6 +160,7 @@ function initSemantic() {
 
 function processSchedules(data){
   var schedules = data.split("\n\n");
+  var c = 0;
   schedules.forEach(function(schedule){
     $.get("template/index.html",function(data){
       $(".schedules .schedules-content").append(data);
@@ -189,20 +189,25 @@ function processSchedules(data){
             }
           });
         }
-
         eventCount++;
-      })
+      });
+      //console.log($('.cd-schedule'));
+      c++;
+      if (c===schedules.length) {
+        displaySchedules();
+      }
     });
   });
-  $.cachedScript("template/js/main.js").done(function () {
-    $(".content").toggleClass('hide');
-    $(".schedules-content").slick({
+}
+
+function displaySchedules() {
+  $(".schedules-box").toggleClass('hide');
+  $(".content").toggleClass('hide');
+  $(".schedules-content").slick({
       dots: true,
       adaptiveHeight: true
-    });
-    $(".schedules-box").toggleClass('hide');
   });
-  // $(".schedules").modal('refresh');
+  createTemplate();
 }
 
 function createEvent(startTime, endTime, title, eventCount) {
@@ -226,6 +231,7 @@ jQuery.cachedScript = function( url, options ) {
   options = $.extend( options || {}, {
     dataType: "script",
     cache: true,
+    async: false,
     url: url
   });
 
