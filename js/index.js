@@ -154,9 +154,7 @@ function generateSchedules() {
     var posting = $.post("php/courseDB.php", { titles: titles.join(" && "), credits: credits, blocks: blocks.join(" && ") });
     posting.done(function(data){
         // Output for testing
-        // $(".schedules .schedules-content").html(data);
-        // $(".schedules").modal('refresh');
-        // $(".schedules").modal('show');
+        // console.log(data);
 
         //Output for production
         if (data) {
