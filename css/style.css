@@ -31,7 +31,7 @@ h1 {
 		width: auto;
 	}
 
-.content{
+.main-content{
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -76,7 +76,7 @@ h1 {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100%;
+	min-height: 90vh;
 	width: 50%;
 }
 
@@ -123,6 +123,10 @@ h1 {
 		z-index: 5;
 	}
 
+	.credits-box .button {
+		border-radius: .28571429rem / 0 10% 10% 0 !important;
+	}
+
 	.message .header {
 		text-align: left;
 	}
@@ -145,7 +149,8 @@ h1 {
 			flex-direction: column;
 			justify-content: flex-start;
 			align-items: center;
-			height: 40vh;
+			padding-bottom: 1rem;
+			min-height: 40vh;
 		}
 
 		.classes-list-header{

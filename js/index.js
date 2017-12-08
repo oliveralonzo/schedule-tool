@@ -52,7 +52,7 @@ $(document).ready(function(){
         });
 
         $(".back-schedules").click(function() {
-          $(".content").toggleClass('hide');
+          $(".main-content").toggleClass('hide');
           $(".schedules-content").slick('unslick');
           $(".schedules .schedules-content").empty();
           $(".schedules-box").toggleClass('hide');
@@ -64,7 +64,14 @@ $(document).ready(function(){
         });
 
         $('#showCredits').click(function(){
-          $('.restrictions').modal('show');
+          if ($("#credits").val()) {
+            $('.restrictions').modal('show');
+          } else {
+            $('.credits-box .message').transition('show');
+            timeout = window.setTimeout(function() {
+            $('.credits-box .message').transition('hide');
+            }, 3000);
+          }
         });
 
         $(".back-no-schedules").click(function() {
@@ -146,41 +153,35 @@ function addClassToCart($course) {
 // once that's done, it calls processSchedules with the returned data
 function generateSchedules() {
   var credits = $("#credits").val();
-  if (credits) {
-    // loading box being hidden again from main.js 340. Make that a promise later on
-    $(".loading-box").toggleClass('hide');
-    $('.restrictions').modal('hide');
-    $(".schedules .schedules-content").empty();
-    $(".schedules").prepend('');
-    var titles = [];
-    $('.course-title').each(function() {
-        titles.push($(this).attr("value"));
-    });
 
-    var blocks = [];
-    $('.restriction').each(function() {
-      blocks.push($(this).attr("value"));
-    });
+  // loading box being hidden again from main.js 340. Make that a promise later on
+  $(".loading-box").toggleClass('hide');
+  $('.restrictions').modal('hide');
+  $(".schedules .schedules-content").empty();
+  $(".schedules").prepend('');
+  var titles = [];
+  $('.course-title').each(function() {
+      titles.push($(this).attr("value"));
+  });
 
-    var posting = $.post("php/courseDB.php", { titles: titles.join(" && "), credits: credits, blocks: blocks.join(" && ") });
-    posting.done(function(data){
-        // Output for testing
-        // console.log(data);
+  var blocks = [];
+  $('.restriction').each(function() {
+    blocks.push($(this).attr("value"));
+  });
 
-        //Output for production
-        if (data) {
-          processSchedules(data);
-        } else {
-          $('.loading-box').addClass('hide');
-          $('.no-schedules').removeClass('hide');
-        }
-    });
-  } else {
-    $('.credits-box .message').transition('show');
-    timeout = window.setTimeout(function() {
-      $('.credits-box .message').transition('hide');
-    }, 3000);
-  }
+  var posting = $.post("php/courseDB.php", { titles: titles.join(" && "), credits: credits, blocks: blocks.join(" && ") });
+  posting.done(function(data){
+      // Output for testing
+      // console.log(data);
+
+      //Output for production
+      if (data) {
+        processSchedules(data);
+      } else {
+        $('.loading-box').addClass('hide');
+        $('.no-schedules').removeClass('hide');
+      }
+  });
 }
 
 // Function that creates the template for all the schedules generated
@@ -230,7 +231,7 @@ function processSchedules(data){
 // Function that displays the templated schedules
 function displaySchedules() {
   $(".schedules-box").toggleClass('hide');
-  $(".content").toggleClass('hide');
+  $(".main-content").toggleClass('hide');
   $(".schedules-content").slick({
       dots: true,
       adaptiveHeight: true
