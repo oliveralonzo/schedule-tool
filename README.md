@@ -1,4 +1,4 @@
-# ![uChoose](img/full-logo.png)
+# ![uChoose](img/full-logo.png?s?=100)
 
 ## Capstone Project by Josh Nichols and Oliver Alonzo - December 2018
 
