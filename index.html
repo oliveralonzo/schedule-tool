@@ -23,7 +23,7 @@
     <title>Capstone</title>
   </head>
   <body>
-    <div class="header">
+    <div class="main-header">
       <a class="header-logo" href="/index.html">
         <img id="headerLogo" src="img/u-logo.png" alt="Logo">
       </a>
@@ -49,6 +49,13 @@
         <div class="search-wrap hide">
           <h1>Search for courses</h1>
           <div class="dropdowns">
+            <div class="ui warning message hidden">
+              <i class="close icon"></i>
+              <div class="header">
+              Oops, don't do that!
+              </div>
+              You already added that course.
+            </div>
           </div>
           <div class="ui buttons search-buttons">
             <button id="titleButton" class="ui button">Search By Title</button>
@@ -132,9 +139,16 @@
           </div>
         </div>
         <div class="actions">
-          <div class="ui action input">
+          <div class="ui action input credits-box">
             <input placeholder="Enter credits..." type="text" id="credits" maxlength="2" size="12" name="credits" value="">
             <button id="generate" name="generate" class="ui button">Generate Schedules</button>
+            <div class="ui warning message hidden">
+              <i class="close icon"></i>
+              <div class="header">
+              Oops, can't do that!
+              </div>
+              Enter the number of credits you want
+            </div>
           </div>
         </div>
       </div>

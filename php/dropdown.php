@@ -48,7 +48,7 @@ function buildCourseDropdowns() {
   echo '<div class="titleDropdown">';
   // Builds dropdown
   echo '<select id="titles" name="credits" onchange="" class="ui search selection dropdown">';
-  echo '<option value=""> Search by Title... </option>';
+  echo '<option value=""> Enter Title... </option>';
   // Populate dropdown
   foreach ($courseTitleArray as $i => $title) {
     // Skip dummy course
@@ -67,7 +67,7 @@ function buildCourseDropdowns() {
   echo '<div class="codeDropdown">';
   // Builds dropdown
   echo '<select id="codes" name="credits" onchange="" class="ui search selection dropdown">';
-  echo '<option value=""> Search by Code... </option>';
+  echo '<option value=""> Enter Code... </option>';
   // Populate dropdown
   foreach ($subjectCodeArray as $i => $code) {
     // Skip dummy course
@@ -80,7 +80,7 @@ function buildCourseDropdowns() {
   // Subject numbers dropdown
   echo '<select id="courseNumbers" name="credits" onchange="" class="ui search selection dropdown">';
   echo '</select>';
-  
+
   echo '<input id="submitByCode" type="button" name="add" value="Add" class="ui button addButton">';
   echo '</div>';
 
