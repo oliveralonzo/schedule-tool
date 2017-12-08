@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="slick/slick-theme.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
-    <title>Capstone</title>
+    <title>uChoose</title>
   </head>
   <body>
     <div class="main-header">
@@ -28,7 +28,7 @@
         <img id="headerLogo" src="img/u-logo.png" alt="Logo">
       </a>
     </div>
-    <div class="content">
+    <div class="main-content">
       <div class="welcome-box">
         <div class="welcome-msg">
           <h2>We plan,
@@ -80,7 +80,22 @@
         </div>
         <div class="credits-input-wrap">
           <div class="show-credits-wrap">
-            <button type="button" name="button" class="ui right labeled icon button" id="showCredits">Next<i class="right arrow icon"></i></button>
+            <div class="ui action input credits-box">
+              <input placeholder="Enter credits..." type="text" id="credits" maxlength="2" size="12" name="credits" value="">
+              <div class="ui animated button" id="showCredits">
+                <div class="visible content">Next</div>
+                <div class="hidden content">
+                  <i class="right arrow icon"></i>
+                </div>
+              </div>
+              <div class="ui warning message hidden">
+                <i class="close icon"></i>
+                <div class="header">
+                Oops, can't do that!
+                </div>
+                Enter the number of credits you want
+              </div>
+            </div>
           </div>
 
         </div>
@@ -139,17 +154,7 @@
           </div>
         </div>
         <div class="actions">
-          <div class="ui action input credits-box">
-            <input placeholder="Enter credits..." type="text" id="credits" maxlength="2" size="12" name="credits" value="">
             <button id="generate" name="generate" class="ui button">Generate Schedules</button>
-            <div class="ui warning message hidden">
-              <i class="close icon"></i>
-              <div class="header">
-              Oops, can't do that!
-              </div>
-              Enter the number of credits you want
-            </div>
-          </div>
         </div>
       </div>
 
