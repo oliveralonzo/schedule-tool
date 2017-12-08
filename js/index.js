@@ -1,3 +1,5 @@
+var timeout;
+
 // All jquery functions are attached during $(document).ready();
 $(document).ready(function(){
     $("#titleButton").click(function(){
@@ -9,7 +11,7 @@ $(document).ready(function(){
 
     var getting = $.get("php/dropdown.php");
     getting.done(function(data) {
-        $(".dropdowns").html(data);
+        $(".dropdowns").prepend(data);
         $(".search-wrap").toggleClass('hide');
         $(".search-loading").toggleClass('hide');
         $(".codeDropdown").hide();
@@ -69,6 +71,11 @@ $(document).ready(function(){
           $('.no-schedules').addClass('hide');
         });
 
+        $('.message .close').on('click', function() {
+          $(this).closest('.message').transition('fade');
+          clearTimeout(timeout);
+        });
+
         initSemantic();
   }).fail(function(err,status){
     alert("err");
@@ -126,8 +133,11 @@ function addClassToCart($course) {
         var credits = $(this).val();
         $(this).parent().attr("credits", credits);
       });
-    } else {
-      // Display message for not being able to add
+    } else if (title) {
+      $('.dropdowns .message').transition('show');
+      timeout = window.setTimeout(function() {
+        $('.dropdowns .message').transition('hide');
+      }, 3000);
     }
 
 }
@@ -135,6 +145,8 @@ function addClassToCart($course) {
 // Function that starts the process for generating schedules, calling the php File
 // once that's done, it calls processSchedules with the returned data
 function generateSchedules() {
+  var credits = $("#credits").val();
+  if (credits) {
     // loading box being hidden again from main.js 340. Make that a promise later on
     $(".loading-box").toggleClass('hide');
     $('.restrictions').modal('hide');
@@ -150,7 +162,6 @@ function generateSchedules() {
       blocks.push($(this).attr("value"));
     });
 
-    var credits = $("#credits").val();
     var posting = $.post("php/courseDB.php", { titles: titles.join(" && "), credits: credits, blocks: blocks.join(" && ") });
     posting.done(function(data){
         // Output for testing
@@ -164,6 +175,12 @@ function generateSchedules() {
           $('.no-schedules').removeClass('hide');
         }
     });
+  } else {
+    $('.credits-box .message').transition('show');
+    timeout = window.setTimeout(function() {
+      $('.credits-box .message').transition('hide');
+    }, 3000);
+  }
 }
 
 // Function that creates the template for all the schedules generated
@@ -180,6 +197,7 @@ function processSchedules(data){
           var info = course.split(", ");
           var crn = info[0];
           var courseCode = info[1];
+          var professor = info[2].trim();
           var times = info[4].split(" && ");
           times.forEach(function(time) {
             var $current = $(".schedules .schedules-content .cd-schedule:last-child");
@@ -188,7 +206,7 @@ function processSchedules(data){
               var hours = time.split(" ")[1].split("-");
               for (var i=0; i<days.length; i++) {
                 $current.find("#" + days[i]).append(
-                  createEvent(formatTime(hours[0]), formatTime(hours[1]), courseCode + " - " + crn, eventCount));
+                  createEvent(formatTime(hours[0]), formatTime(hours[1]), courseCode + " - " + crn, professor, eventCount));
               }
             } else {
               $current.find(".not-scheduled").removeClass('hide');
@@ -221,8 +239,8 @@ function displaySchedules() {
 }
 
 // Function that returns a li element for event
-function createEvent(startTime, endTime, title, eventCount) {
-  return `<li class="single-event" data-start="${startTime}" data-end="${endTime}" data-content="event-abs-circuit" data-event="event-${eventCount}">
+function createEvent(startTime, endTime, title, courseCode, eventCount) {
+  return `<li class="single-event" data-start="${startTime}" data-end="${endTime}" data-content="${courseCode}" data-event="event-${eventCount}">
     <a href="#0">
       <em class="event-name">${title}</em>
     </a>
