@@ -1,6 +1,6 @@
 # uChoose
 
-## Capstone Project by Josh Nichols and Oliver Alonzo - December 2018
+## Capstone Project by Josh Nichols and Oliver Alonzo - December 2017
 
 To run locally:  
 	- Download zip file  
